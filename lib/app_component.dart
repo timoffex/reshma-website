@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:math';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/material_button/material_button.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 import 'rz_gallery/rz_gallery.dart';
 import 'rz_initials/rz_initials.dart';
@@ -16,7 +18,7 @@ import 'rz_initials/rz_initials.dart';
   RzGallery,
   RzInitials,
 ])
-class AppComponent implements OnInit {
+class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   final images = [
     'assets/potion.jpg',
@@ -54,8 +56,14 @@ class AppComponent implements OnInit {
   void ngOnInit() {
     _updateLogo();
 
-    // TODO: Unsubscribe
-    window.onResize.listen((_) => _updateLogo());
+    _resizeSubscription = window.onResize
+        .audit(Duration(milliseconds: 100))
+        .listen((_) => _updateLogo());
+  }
+
+  @override
+  void ngOnDestroy() {
+    _resizeSubscription?.cancel();
   }
 
   void _updateLogo() {
@@ -87,6 +95,8 @@ class AppComponent implements OnInit {
 
   int get _galleryScrollPosition =>
       galleryElement.offsetTop - topBar.scrollHeight;
+
+  StreamSubscription<void> _resizeSubscription;
 
   @ViewChild('topBar')
   Element topBar;
