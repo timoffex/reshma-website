@@ -40,7 +40,7 @@ class AppComponent implements OnInit {
 
   @visibleForTemplate
   void scrollPastLandingArea() {
-    content.scrollTo(0, 700);
+    content.scrollTo(0, _galleryScrollPosition);
   }
 
   @visibleForTemplate
@@ -62,7 +62,12 @@ class AppComponent implements OnInit {
     final offset2 = landingLogoAnchorEnd.documentOffset;
 
     // Starts at 1, goes down to 0.
-    final t = min(1, max(0, (500 - content.scrollTop) / 500));
+    final t = min(
+        1,
+        max(
+            0,
+            (_galleryScrollPosition - content.scrollTop) /
+                _galleryScrollPosition));
     final preblend = (3 - 2 * t) * t * t;
 
     topBarVisible = preblend < 0.04;
@@ -79,8 +84,16 @@ class AppComponent implements OnInit {
     landingLogoElement.style.left = '${adjustedOffset.x}px';
   }
 
+  int get _galleryScrollPosition => gallery.offsetTop - topBar.scrollHeight;
+
+  @ViewChild('topBar')
+  Element topBar;
+
   @ViewChild('content')
   Element content;
+
+  @ViewChild('rzGallery', read: Element)
+  Element gallery;
 
   @ViewChild('landingLogoElement')
   Element landingLogoElement;

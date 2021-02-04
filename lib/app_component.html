@@ -5,7 +5,7 @@
 </div>
 <div #landingLogoAnchorEnd class="landing-logo-anchor-end"></div>
 
-<div class="top-bar" [class.visible]="topBarVisible">
+<div #topBar class="top-bar" [class.visible]="topBarVisible">
   <rz-initials class="logo-top-bar"></rz-initials>
   <span class="reshma-name">Reshma Zachariah</span>
 </div>
@@ -28,6 +28,7 @@
       </button>
     </div>
   </div>
-  <rz-gallery [artworks]="images"></rz-gallery>
+  <rz-gallery #rzGallery
+              [artworks]="images"></rz-gallery>
   <div class="unlanding-space"></div>
 </div>
