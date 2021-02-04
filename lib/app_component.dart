@@ -40,6 +40,7 @@ class AppComponent implements OnInit {
 
   @visibleForTemplate
   void scrollPastLandingArea() {
+    gallery.focus();
     content.scrollTo(0, _galleryScrollPosition);
   }
 
@@ -84,7 +85,8 @@ class AppComponent implements OnInit {
     landingLogoElement.style.left = '${adjustedOffset.x}px';
   }
 
-  int get _galleryScrollPosition => gallery.offsetTop - topBar.scrollHeight;
+  int get _galleryScrollPosition =>
+      galleryElement.offsetTop - topBar.scrollHeight;
 
   @ViewChild('topBar')
   Element topBar;
@@ -93,7 +95,10 @@ class AppComponent implements OnInit {
   Element content;
 
   @ViewChild('rzGallery', read: Element)
-  Element gallery;
+  Element galleryElement;
+
+  @ViewChild('rzGallery')
+  RzGallery gallery;
 
   @ViewChild('landingLogoElement')
   Element landingLogoElement;

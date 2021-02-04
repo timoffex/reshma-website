@@ -1,5 +1,8 @@
-<div class="container">
-  <img class="artwork"
-       *ngFor="let artwork of artworks"
-       src="{{artwork}}">
+<div #container focusList class="container">
+  <button focusItem
+          *ngFor="let artwork of artworks"
+          class="artwork">
+    <img src="{{artwork}}" alt="" class="artwork-image">
+    <span class="hidden-text">TODO artwork name</span>
+  </button>
 </div>
