@@ -19,9 +19,9 @@ import 'rz_initials/rz_initials.dart';
 class AppComponent implements OnInit {
   @visibleForTemplate
   final images = [
-    'https://cdna.artstation.com/p/assets/images/images/026/717/380/large/reshma-zachariah-untitled-artwork-53.jpg?1589529271',
-    'https://cdna.artstation.com/p/assets/images/images/026/717/464/large/reshma-zachariah-untitled-artwork-54.jpg?1589529554',
-    'https://cdna.artstation.com/p/assets/images/images/024/250/592/large/reshma-zachariah-stump.jpg?1581803144'
+    'assets/potion.jpg',
+    'assets/mushroom.jpg',
+    'assets/stump.jpg',
   ];
 
   @visibleForTemplate
