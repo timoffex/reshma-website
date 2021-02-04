@@ -108,5 +108,6 @@ $reshma-top-bar: #626868;
 .content {
     background-color: $reshma-background;
     height: 100%;
-    overflow-y: auto;    
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
