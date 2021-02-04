@@ -7,6 +7,7 @@ import 'package:angular/meta.dart';
 import 'package:angular_components/material_button/material_button.dart';
 import 'package:stream_transform/stream_transform.dart';
 
+import 'artwork.dart';
 import 'rz_gallery/rz_gallery.dart';
 import 'rz_initials/rz_initials.dart';
 
@@ -21,9 +22,9 @@ import 'rz_initials/rz_initials.dart';
 class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   final images = [
-    'assets/potion.jpg',
-    'assets/mushroom.jpg',
-    'assets/stump.jpg',
+    Artwork(name: 'Potions', thumbnailUrl: 'assets/potion.jpg'),
+    Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom.jpg'),
+    Artwork(name: 'Stump', thumbnailUrl: 'assets/stump.jpg'),
   ];
 
   @visibleForTemplate

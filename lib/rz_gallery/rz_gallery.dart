@@ -2,6 +2,8 @@ import 'package:angular/angular.dart';
 import 'package:angular_components/focus/focus_item.dart';
 import 'package:angular_components/focus/focus_list.dart';
 
+import 'package:reshmawebsite/artwork.dart';
+
 @Component(
     selector: 'rz-gallery',
     templateUrl: 'rz_gallery.html',
@@ -9,7 +11,7 @@ import 'package:angular_components/focus/focus_list.dart';
     directives: [NgFor, FocusItemDirective, FocusListDirective])
 class RzGallery {
   @Input()
-  List<String> artworks;
+  List<Artwork> artworks;
 
   void focus() {
     container.focus(0);

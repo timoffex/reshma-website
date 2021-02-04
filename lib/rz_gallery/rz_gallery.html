@@ -1,8 +1,11 @@
-<div #container focusList class="container">
+<div #container
+     focusList
+     class="container"
+     aria-label="artwork gallery">
   <button focusItem
           *ngFor="let artwork of artworks"
-          class="artwork">
-    <img src="{{artwork}}" alt="" class="artwork-image">
-    <span class="hidden-text">TODO artwork name</span>
+          class="artwork"
+          [attr.aria-label]="artwork.name">
+    <img src="{{artwork.thumbnailUrl}}" alt="" class="artwork-image">
   </button>
 </div>
