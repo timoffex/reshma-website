@@ -31,6 +31,9 @@ class AppComponent implements OnInit {
   bool scrollButtonVisible = true;
 
   @visibleForTemplate
+  String debugText = 'No debug text so far';
+
+  @visibleForTemplate
   void doScroll() {
     _updateLogo();
   }
@@ -38,6 +41,12 @@ class AppComponent implements OnInit {
   @visibleForTemplate
   void scrollPastLandingArea() {
     content.scrollTo(0, 700);
+  }
+
+  @visibleForTemplate
+  void scrollToTop() {
+    content.scrollTo(0, 0);
+    debugText = 'Scrolled to top!';
   }
 
   @override

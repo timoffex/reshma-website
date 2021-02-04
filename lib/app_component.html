@@ -10,10 +10,13 @@
   <span class="reshma-name">Reshma Zachariah</span>
 </div>
 
+<div class="debug-text">{{debugText}}</div>
+
 <div #content class="content" (scroll)="doScroll()">
   <div class="landing-space">
     <div #landingLogoAnchorStart class="landing-logo-anchor-start">
       <button (click)="scrollPastLandingArea()"
+              (focus)="scrollToTop()"
               type="button"
               class="landing-page-arrow"
               [class.visible]="scrollButtonVisible">

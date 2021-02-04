@@ -8,6 +8,13 @@ $reshma-top-bar: #626868;
     background-color: $reshma-background;
 }
 
+.debug-text {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
 .top-bar {
     position: absolute;
     top: 0;
