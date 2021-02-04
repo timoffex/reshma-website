@@ -1,4 +1,4 @@
-name: reshma-website
+name: reshmawebsite
 
 environment:
   sdk: '>=2.10.0-0 <3.0.0'

@@ -12,7 +12,18 @@
 
 <div #content class="content" (scroll)="doScroll()">
   <div class="landing-space">
-    <div #landingLogoAnchorStart class="landing-logo-anchor-start"></div>
+    <div #landingLogoAnchorStart class="landing-logo-anchor-start">
+      <button (click)="scrollPastLandingArea()"
+              type="button"
+              class="landing-page-arrow"
+              [class.visible]="scrollButtonVisible">
+        <svg aria-hidden="true" viewBox="0 0 300 100">
+          <polygon points="10,10 150,90 290,10"
+                   style="fill:white;fill-rule:evenodd;" />
+        </svg>
+        Scroll to main area
+      </button>
+    </div>
   </div>
   <rz-gallery [artworks]="images"></rz-gallery>
   <div class="unlanding-space"></div>

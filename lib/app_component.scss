@@ -26,6 +26,8 @@ $reshma-top-bar: #626868;
     transition: height $mat-transition-desktop $mat-transition-standard;
 
     background-color: $reshma-top-bar;
+
+    z-index: 1;
 }
 
 .logo-top-bar {
@@ -48,7 +50,7 @@ $reshma-top-bar: #626868;
     // Don't block scrolling
     pointer-events: none;
 
-    z-index: 1;
+    z-index: 2;
 
     &.invisible {
         display: none;
@@ -73,6 +75,26 @@ $reshma-top-bar: #626868;
     right: 50%;
     top: 50%;
     bottom: 50%;
+}
+
+.landing-page-arrow {
+    position: relative;
+    top: 20 * $mat-grid;
+    width: 10 * $mat-grid;
+    height: 10 * $mat-grid;
+
+    // Remove button stuff
+    background-color: transparent;
+    border: none;
+
+    font-size: $mat-font-size-button;
+
+    opacity: 0;
+    transition: opacity $mat-transition-desktop linear;
+
+    &.visible {
+        opacity: 1;
+    }
 }
 
 .landing-logo-anchor-end {

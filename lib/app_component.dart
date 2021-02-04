@@ -25,8 +25,19 @@ class AppComponent implements OnInit {
   ];
 
   @visibleForTemplate
+  bool topBarVisible = false;
+
+  @visibleForTemplate
+  bool scrollButtonVisible = true;
+
+  @visibleForTemplate
   void doScroll() {
     _updateLogo();
+  }
+
+  @visibleForTemplate
+  void scrollPastLandingArea() {
+    content.scrollTo(0, 700);
   }
 
   @override
@@ -46,6 +57,7 @@ class AppComponent implements OnInit {
     final preblend = (3 - 2 * t) * t * t;
 
     topBarVisible = preblend < 0.04;
+    scrollButtonVisible = preblend > 0.96;
     final blend = topBarVisible ? 0 : preblend;
 
     final size = 300 * blend + 60 * (1 - blend);
@@ -57,9 +69,6 @@ class AppComponent implements OnInit {
     landingLogoElement.style.top = '${adjustedOffset.y}px';
     landingLogoElement.style.left = '${adjustedOffset.x}px';
   }
-
-  @visibleForTemplate
-  bool topBarVisible = false;
 
   @ViewChild('content')
   Element content;
