@@ -1,0 +1,21 @@
+@import 'package:angular_components/css/material/material';
+
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.artwork {
+    width: 40 * $mat-grid;
+    height: 40 * $mat-grid;
+    margin: $mat-grid $mat-grid;
+
+    @include shadow-transition();
+    @include shadow-elevation($dp: 2);
+    
+    &:hover {
+        @include shadow-elevation($dp: 16);
+    }
+}

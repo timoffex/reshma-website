@@ -1,0 +1,90 @@
+@import 'package:angular_components/css/material/material';
+
+
+$reshma-background: #939196;
+$reshma-top-bar: #626868;
+
+:host {
+    background-color: $reshma-background;
+}
+
+.top-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 0;
+
+    overflow: hidden;
+    
+    &.visible {
+        height: 8 * $mat-grid;
+    }
+
+    display: flex;
+    flex-direction: row;
+
+    transition: height $mat-transition-desktop $mat-transition-standard;
+
+    background-color: $reshma-top-bar;
+}
+
+.logo-top-bar {
+    width: 60px;
+    height: 60px;
+}
+
+.reshma-name {
+    margin-left: 2 * $mat-grid;
+    text-align: center;
+    line-height: 60px;
+    height: 60px;
+    color: #FFE2FE;
+}
+
+.landing-logo {
+    position: absolute;
+    top: $mat-grid;
+
+    // Don't block scrolling
+    pointer-events: none;
+
+    z-index: 1;
+
+    &.invisible {
+        display: none;
+    }
+}
+
+.landing-space {
+    background-color: $reshma-background;
+    height: 100 * $mat-grid;
+}
+
+.unlanding-space {
+    background-color: $reshma-background;
+    height: 80 * $mat-grid;
+}
+
+.landing-logo-anchor-start {
+    position: relative;
+    width: 0;
+    height: 0;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+}
+
+.landing-logo-anchor-end {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 4 * $mat-grid;
+    top: 4 * $mat-grid;
+}
+
+.content {
+    background-color: $reshma-background;
+    height: 100%;
+    overflow-y: auto;    
+}
