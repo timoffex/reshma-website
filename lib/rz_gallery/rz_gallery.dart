@@ -8,15 +8,30 @@ import 'package:reshmawebsite/artwork.dart';
     selector: 'rz-gallery',
     templateUrl: 'rz_gallery.html',
     styleUrls: ['rz_gallery.css'],
-    directives: [NgFor, FocusItemDirective, FocusListDirective])
+    directives: [NgFor, FocusItemDirective, FocusListDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush)
 class RzGallery {
   @Input()
   List<Artwork> artworks;
 
   void focus() {
-    container.focus(0);
+    if (!_hasFocus) {
+      container.focus(0);
+    }
+  }
+
+  @HostListener('focusin')
+  void onFocusIn() {
+    _hasFocus = true;
+  }
+
+  @HostListener('focusout')
+  void onFocusOut() {
+    _hasFocus = false;
   }
 
   @ViewChild('container', read: FocusListDirective)
   FocusListDirective container;
+
+  bool _hasFocus = false;
 }

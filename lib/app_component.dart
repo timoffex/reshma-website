@@ -44,7 +44,9 @@ class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   void scrollPastLandingArea() {
     gallery.focus();
-    content.scrollTo(0, _galleryScrollPosition);
+    if (content.scrollTop < _galleryScrollPosition) {
+      content.scrollTo(0, _galleryScrollPosition);
+    }
   }
 
   @visibleForTemplate

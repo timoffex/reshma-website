@@ -32,5 +32,6 @@
   </div>
   <rz-gallery #rzGallery
               class="gallery"
+              (focusin)="scrollPastLandingArea()"
               [artworks]="images"></rz-gallery>
 </div>
