@@ -11,14 +11,17 @@ import 'artwork.dart';
 import 'rz_gallery/rz_gallery.dart';
 import 'rz_initials/rz_initials.dart';
 
-@Component(selector: 'my-app', templateUrl: 'app_component.html', styleUrls: [
-  'app_component.css'
-], directives: [
-  MaterialButtonComponent,
-  NgFor,
-  RzGallery,
-  RzInitials,
-])
+@Component(
+    selector: 'my-app',
+    templateUrl: 'app_component.html',
+    styleUrls: ['app_component.css'],
+    directives: [
+      MaterialButtonComponent,
+      NgFor,
+      RzGallery,
+      RzInitials,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   final images = [
