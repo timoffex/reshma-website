@@ -1,10 +1,14 @@
 @import 'package:angular_components/css/material/material';
 
+:host {
+    display: block;
+}
 
 .container {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .artwork {

@@ -20,7 +20,9 @@
               type="button"
               class="landing-page-arrow"
               [class.visible]="scrollButtonVisible">
-        <svg aria-hidden="true" viewBox="0 0 300 100">
+        <svg aria-hidden="true"
+             viewBox="0 0 300 100"
+             class="landing-page-arrow-svg">
           <polygon points="10,10 150,90 290,10"
                    style="fill:white;fill-rule:evenodd;" />
         </svg>
@@ -29,6 +31,6 @@
     </div>
   </div>
   <rz-gallery #rzGallery
+              class="gallery"
               [artworks]="images"></rz-gallery>
-  <div class="unlanding-space"></div>
 </div>

@@ -69,11 +69,6 @@ $reshma-top-bar: #626868;
     height: 100vh;
 }
 
-.unlanding-space {
-    background-color: $reshma-background;
-    height: 80 * $mat-grid;
-}
-
 .landing-logo-anchor-start {
     position: relative;
     width: 0;
@@ -87,15 +82,15 @@ $reshma-top-bar: #626868;
 .landing-page-arrow {
     position: relative;
     top: 20 * $mat-grid;
-    left: -5 * $mat-grid;
-    width: 10 * $mat-grid;
+    left: -20 * $mat-grid;
+    width: 40 * $mat-grid;
     height: 10 * $mat-grid;
 
     // Remove button stuff
     background-color: transparent;
     border: none;
 
-    font-size: $mat-font-size-button;
+    font-size: 24px;
 
     opacity: 0;
     transition: opacity $mat-transition-desktop linear;
@@ -103,6 +98,15 @@ $reshma-top-bar: #626868;
     &.visible {
         opacity: 1;
     }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing-page-arrow-svg {
+    width: 10 * $mat-grid;
 }
 
 .landing-logo-anchor-end {
@@ -118,4 +122,8 @@ $reshma-top-bar: #626868;
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
+}
+
+.gallery {
+    min-height: 100vh;
 }
