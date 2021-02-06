@@ -25,9 +25,15 @@ import 'rz_initials/rz_initials.dart';
 class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   final images = [
-    Artwork(name: 'Potions', thumbnailUrl: 'assets/potion.jpg'),
-    Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom.jpg'),
-    Artwork(name: 'Stump', thumbnailUrl: 'assets/stump.jpg'),
+    Artwork(name: 'Potions', thumbnailUrl: 'assets/potion_gallery.jpg'),
+    Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom_gallery.jpg'),
+    Artwork(name: 'Stump', thumbnailUrl: 'assets/stump_gallery.jpg'),
+    Artwork(name: 'Link Charm', thumbnailUrl: 'assets/link_charm_gallery.jpg'),
+    Artwork(name: 'Kirby Pancakes', thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg'),
+    Artwork(name: 'Pika Fruit', thumbnailUrl: 'assets/pika_fruit_gallery.jpg'),
+    Artwork(name: 'Girl', thumbnailUrl: 'assets/tennis_player_gallery.jpg'),
+    Artwork(name: 'Chuck', thumbnailUrl: 'assets/chuck_gallery.jpg'),
+    Artwork(name: 'Wooden Charm', thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg'),
   ];
 
   @visibleForTemplate
