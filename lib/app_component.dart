@@ -37,9 +37,6 @@ class AppComponent implements OnInit, OnDestroy {
   bool scrollButtonVisible = true;
 
   @visibleForTemplate
-  String debugText = 'No debug text so far';
-
-  @visibleForTemplate
   void doScroll() {
     _updateLogo();
   }
@@ -55,7 +52,6 @@ class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   void scrollToTop() {
     content.scrollTo(0, 0);
-    debugText = 'Scrolled to top!';
   }
 
   @override

@@ -1,4 +1,8 @@
+@import 'package:reshmawebsite/css/common';
+
 svg {
   width: 100%;
   height: 100%;
+
+  @include theme('stroke', $primary-text-color);
 }

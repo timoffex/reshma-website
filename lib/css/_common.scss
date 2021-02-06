@@ -1,0 +1,17 @@
+$primary-color: "primary-color";
+$primary-text-color: "primary-text-color";
+$secondary-text-color: "secondary-text-color";
+
+$light-theme: "light-theme";
+
+$themes: (
+  $light-theme: (
+    $primary-color: #fffff3,
+    $primary-text-color: #444446,
+    $secondary-text-color: #bfb0a9
+  )
+);
+
+@mixin theme($property, $color-name) {
+  #{$property}: map-get(map-get($themes, "light-theme"), $color-name);
+}

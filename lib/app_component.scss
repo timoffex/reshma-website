@@ -1,18 +1,13 @@
 @import 'package:angular_components/css/material/material';
+@import 'package:reshmawebsite/css/common';
 
-
-$reshma-background: #939196;
-$reshma-top-bar: #626868;
 
 :host {
-  background-color: $reshma-background;
-}
+  ::ng-deep {
+    @include theme("color", $primary-text-color);
+  }
 
-.debug-text {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
+  @include theme("background-color", $primary-color);
 }
 
 .top-bar {
@@ -22,6 +17,8 @@ $reshma-top-bar: #626868;
   height: 0;
 
   overflow: hidden;
+  @include theme("background-color", $primary-color);
+  @include shadow-elevation($dp: 16);
     
   &.visible {
     height: 8 * $mat-grid;
@@ -31,8 +28,6 @@ $reshma-top-bar: #626868;
   flex-direction: row;
 
   transition: height $mat-transition-desktop $mat-transition-standard;
-
-  background-color: $reshma-top-bar;
 
   z-index: 1;
 }
@@ -47,7 +42,8 @@ $reshma-top-bar: #626868;
   text-align: center;
   line-height: 60px;
   height: 60px;
-  color: #FFE2FE;
+  
+  @include theme("color", $primary-text-color);
 }
 
 .landing-logo {
@@ -60,12 +56,13 @@ $reshma-top-bar: #626868;
   z-index: 2;
 
   &.invisible {
-      display: none;
+    display: none;
   }
+  
+  @include theme("color", $primary-text-color);
 }
 
 .landing-space {
-  background-color: $reshma-background;
   height: 100vh;
 }
 
@@ -89,6 +86,8 @@ $reshma-top-bar: #626868;
   // Remove button stuff
   background-color: transparent;
   border: none;
+  
+  @include theme("color", $primary-text-color);
 
   font-size: 24px;
 
@@ -118,10 +117,10 @@ $reshma-top-bar: #626868;
 }
 
 .content {
-  background-color: $reshma-background;
   height: 100%;
   overflow-y: auto;
   scroll-behavior: smooth;
+  @include theme("background-color", $primary-color);
 }
 
 .gallery {
