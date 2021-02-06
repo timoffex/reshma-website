@@ -1,0 +1,10 @@
+<div (click)="handleDismiss()"
+     style="position: fixed; width: 100%; height: 100%;"
+     tabindex="-1">
+</div>
+<material-fab autoFocus
+              (trigger)="handleDismiss()"
+              class="close-button">
+  <material-icon icon="close"></material-icon>
+</material-fab>
+<img [src]="artwork.thumbnailUrl" [alt]="artwork.name">
