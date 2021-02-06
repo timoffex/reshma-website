@@ -5,125 +5,125 @@ $reshma-background: #939196;
 $reshma-top-bar: #626868;
 
 :host {
-    background-color: $reshma-background;
+  background-color: $reshma-background;
 }
 
 .debug-text {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .top-bar {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 0;
 
-    overflow: hidden;
+  overflow: hidden;
     
-    &.visible {
-        height: 8 * $mat-grid;
-    }
+  &.visible {
+    height: 8 * $mat-grid;
+  }
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    transition: height $mat-transition-desktop $mat-transition-standard;
+  transition: height $mat-transition-desktop $mat-transition-standard;
 
-    background-color: $reshma-top-bar;
+  background-color: $reshma-top-bar;
 
-    z-index: 1;
+  z-index: 1;
 }
 
 .logo-top-bar {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
 }
 
 .reshma-name {
-    margin-left: 2 * $mat-grid;
-    text-align: center;
-    line-height: 60px;
-    height: 60px;
-    color: #FFE2FE;
+  margin-left: 2 * $mat-grid;
+  text-align: center;
+  line-height: 60px;
+  height: 60px;
+  color: #FFE2FE;
 }
 
 .landing-logo {
-    position: absolute;
-    top: $mat-grid;
+  position: absolute;
+  top: $mat-grid;
 
-    // Don't block scrolling
-    pointer-events: none;
+  // Don't block scrolling
+  pointer-events: none;
 
-    z-index: 2;
+  z-index: 2;
 
-    &.invisible {
-        display: none;
-    }
+  &.invisible {
+      display: none;
+  }
 }
 
 .landing-space {
-    background-color: $reshma-background;
-    height: 100vh;
+  background-color: $reshma-background;
+  height: 100vh;
 }
 
 .landing-logo-anchor-start {
-    position: relative;
-    width: 0;
-    height: 0;
-    left: 50%;
-    right: 50%;
-    top: 30%;
-    bottom: 70%;
+  position: relative;
+  width: 0;
+  height: 0;
+  left: 50%;
+  right: 50%;
+  top: 30%;
+  bottom: 70%;
 }
 
 .landing-page-arrow {
-    position: relative;
-    top: 20 * $mat-grid;
-    left: -20 * $mat-grid;
-    width: 40 * $mat-grid;
-    height: 10 * $mat-grid;
+  position: relative;
+  top: 20 * $mat-grid;
+  left: -20 * $mat-grid;
+  width: 40 * $mat-grid;
+  height: 10 * $mat-grid;
 
-    // Remove button stuff
-    background-color: transparent;
-    border: none;
+  // Remove button stuff
+  background-color: transparent;
+  border: none;
 
-    font-size: 24px;
+  font-size: 24px;
 
-    opacity: 0;
-    transition: opacity $mat-transition-desktop linear;
+  opacity: 0;
+  transition: opacity $mat-transition-desktop linear;
 
-    &.visible {
-        opacity: 1;
-    }
+  &.visible {
+    opacity: 1;
+  }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .landing-page-arrow-svg {
-    width: 10 * $mat-grid;
+  width: 10 * $mat-grid;
 }
 
 .landing-logo-anchor-end {
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: 4 * $mat-grid;
-    top: 4 * $mat-grid;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 4 * $mat-grid;
+  top: 4 * $mat-grid;
 }
 
 .content {
-    background-color: $reshma-background;
-    height: 100%;
-    overflow-y: auto;
-    scroll-behavior: smooth;
+  background-color: $reshma-background;
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .gallery {
-    min-height: 100vh;
+  min-height: 100vh;
 }
