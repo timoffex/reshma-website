@@ -1,0 +1,18 @@
+cradle:
+  multi:
+    - path: "./app"
+      config:
+        cradle:
+          stack:
+            component: "reshma-website-server:exe:reshma-website-server-exe"
+          dependencies:
+            - ./src
+    - path: "./src"
+      config:
+        cradle:
+          stack:
+            component: "reshma-website-server:lib"
+
+dependencies:
+  - package.yaml
+  - stack.yaml
