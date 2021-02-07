@@ -16,12 +16,18 @@ main :: IO ()
 main = run 8080 app
 
 app :: Application
-app request respond = respond $ case pathInfo request of
-  "assets":_       -> guessMime $ tail $ BS.unpack $ rawPathInfo request
-  "fonts":_        -> guessMime $ tail $ BS.unpack $ rawPathInfo request
-  ["main.dart.js"] -> javascript "main.dart.js"
-  ["styles.css"]   -> css "styles.css"
-  _                -> index
+app request respond = do
+  -- I was somewhat surprised to learn that this correctly eliminates
+  -- ".." path segments from the request, making the server /not/
+  -- vulnerable to requests like
+  -- "/assets/../../secret_outside_project.png"
+  putStrLn $ "Request for " ++ BS.unpack (rawPathInfo request)
+  respond $ case pathInfo request of
+    "assets":_       -> guessMime $ tail $ BS.unpack $ rawPathInfo request
+    "fonts":_        -> guessMime $ tail $ BS.unpack $ rawPathInfo request
+    ["main.dart.js"] -> javascript "main.dart.js"
+    ["styles.css"]   -> css "styles.css"
+    _                -> index
 
 
 index :: Response
