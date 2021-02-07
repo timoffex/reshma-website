@@ -12,3 +12,8 @@ html, body {
   padding: 20px;
   text-align: center;
 }
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url(fonts/BebasNeue-Regular.ttf);
+}

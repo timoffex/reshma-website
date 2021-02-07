@@ -130,3 +130,26 @@
 rz-overlay {
   z-index: 3;
 }
+
+h2 {
+  font-weight: lighter;
+}
+
+.reshma-title {
+  font-family: 'Bebas Neue';
+  
+  line-height: 5 * $mat-grid;
+  height: 5 * $mat-grid;
+
+  margin-bottom: 0;
+}
+
+.reshma-subtitle {
+  @include theme('color', $secondary-text-color);
+
+  margin-top: 0;
+}
+
+.centered-text {
+  text-align: center;
+}

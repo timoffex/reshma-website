@@ -129,7 +129,7 @@ class AppComponent implements OnInit, OnDestroy {
   }
 
   int get _galleryScrollPosition =>
-      galleryElement.offsetTop - topBar.scrollHeight;
+      reshmaName.offsetTop - topBar.scrollHeight - 16;
 
   StreamSubscription<void> _resizeSubscription;
 
@@ -139,8 +139,8 @@ class AppComponent implements OnInit, OnDestroy {
   @ViewChild('content')
   Element content;
 
-  @ViewChild('rzGallery', read: Element)
-  Element galleryElement;
+  @ViewChild('reshmaName', read: Element)
+  Element reshmaName;
 
   @ViewChild('rzGallery')
   RzGallery gallery;
