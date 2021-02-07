@@ -24,6 +24,10 @@
   &:hover {
     @include shadow-elevation($dp: 16);
   }
+
+  &:focus {
+    @include shadow-elevation($dp: 16);
+  }
 }
 
 .artwork-image {

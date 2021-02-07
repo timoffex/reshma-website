@@ -52,7 +52,7 @@ class AppComponent implements OnInit, OnDestroy {
   bool scrollButtonVisible = true;
 
   @visibleForTemplate
-  bool overlayVisible = true;
+  bool overlayVisible = false;
 
   @visibleForTemplate
   Artwork detailArtwork;
@@ -60,6 +60,7 @@ class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   void dismissOverlay() {
     overlayVisible = false;
+    gallery.focus();
   }
 
   @visibleForTemplate

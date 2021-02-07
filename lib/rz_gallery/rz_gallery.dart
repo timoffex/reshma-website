@@ -23,12 +23,13 @@ class RzGallery {
 
   void focus() {
     if (!_hasFocus) {
-      container.focus(0);
+      container.focus(_lastIndex);
     }
   }
 
   @visibleForTemplate
-  void handleClickArtwork(Artwork artwork) {
+  void handleClickArtwork(int index, Artwork artwork) {
+    _lastIndex = index;
     _showArtworkDetail.add(artwork);
   }
 
@@ -46,4 +47,5 @@ class RzGallery {
   FocusListDirective container;
 
   bool _hasFocus = false;
+  int _lastIndex = 0;
 }
