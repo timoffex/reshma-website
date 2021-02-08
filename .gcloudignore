@@ -1,0 +1,9 @@
+.DS_Store
+.git
+.gitignore
+
+# Emacs files
+*~
+
+# Code for the website (should be copied to public/)
+website/
