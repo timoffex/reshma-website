@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:meta/meta.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 import 'artwork.dart';
@@ -102,36 +103,79 @@ class AppComponent implements OnInit, OnDestroy {
   }
 
   void _updateLogo() {
-    final offset1 = landingLogoAnchorStart.documentOffset;
-    final offset2 = landingLogoAnchorEnd.documentOffset;
+    final shouldLogoBeVisible = content.scrollTop < 100;
 
-    // Starts at 1, goes down to 0.
-    final t = min(
-        1,
-        max(
-            0,
-            (_galleryScrollPosition - content.scrollTop) /
-                _galleryScrollPosition));
-    final preblend = (3 - 2 * t) * t * t;
+    if (shouldLogoBeVisible != _logoIsVisible) {
+      _animateLogo(appearing: shouldLogoBeVisible);
+    }
+  }
 
-    topBarVisible = preblend < 0.04;
-    scrollButtonVisible = preblend > 0.96;
-    final blend = topBarVisible ? 0 : preblend;
+  /// Begins animating the landing logo in the given direction.
+  Future<void> _animateLogo({@required bool appearing}) async {
+    if (_currentLogoAnimationToken != null &&
+        _currentLogoAnimationDisappearing == !appearing) {
+      return;
+    }
 
+    _currentLogoAnimationToken?.cancel();
+
+    final token = CancellationToken();
+    _currentLogoAnimationToken = token;
+    _currentLogoAnimationDisappearing = !appearing;
+
+    final startTime = DateTime.now();
+    const animDuration = Duration(milliseconds: 300);
+
+    // Hide top bar or landing hint button immediately depending on whether the
+    // logo is appearing or disappearing.
+    if (appearing) topBarVisible = false;
+    if (!appearing) scrollButtonVisible = false;
+    _changeDetector.markForCheck();
+
+    const waitDuration = Duration(milliseconds: 20);
+    var durationSoFar = Duration();
+    while (durationSoFar < animDuration) {
+      if (token.cancelled) return;
+
+      final t = min(1,
+          max(0, durationSoFar.inMilliseconds / animDuration.inMilliseconds));
+      final eased = (3 - 2 * t) * t * t;
+      _setLogoBlend(appearing ? eased : 1 - eased);
+    _changeDetector.markForCheck();
+
+      await Future.delayed(waitDuration);
+      durationSoFar = DateTime.now().difference(startTime);
+    }
+
+    if (token.cancelled) return;
+
+    if (appearing) scrollButtonVisible = true;
+    if (!appearing) topBarVisible = true;
+    _changeDetector.markForCheck();
+
+    _logoIsVisible = appearing;
+  }
+
+  void _setLogoBlend(double blend) {
+    // Keep in sync with initial values in .scss file!
     final size = 300 * blend + 60 * (1 - blend);
-    final targetOffset = offset1 * blend + offset2 * (1 - blend);
-    final adjustedOffset = targetOffset - Point(size / 2, size / 2);
 
     landingLogoElement.style.width = '${size}px';
     landingLogoElement.style.height = '${size}px';
-    landingLogoElement.style.top = '${adjustedOffset.y}px';
-    landingLogoElement.style.left = '${adjustedOffset.x}px';
+    landingLogoElement.style.top = '${blend * 33}vh';
+    landingLogoElement.style.left = '${blend * 50}vw';
   }
+
+  AppComponent(this._changeDetector);
 
   int get _galleryScrollPosition =>
       reshmaName.offsetTop - topBar.scrollHeight - 16;
 
   StreamSubscription<void> _resizeSubscription;
+
+  CancellationToken _currentLogoAnimationToken;
+  bool _currentLogoAnimationDisappearing = false;
+  bool _logoIsVisible = true;
 
   @ViewChild('topBar')
   Element topBar;
@@ -148,9 +192,11 @@ class AppComponent implements OnInit, OnDestroy {
   @ViewChild('landingLogoElement')
   Element landingLogoElement;
 
-  @ViewChild('landingLogoAnchorStart')
-  Element landingLogoAnchorStart;
+  final ChangeDetectorRef _changeDetector;
+}
 
-  @ViewChild('landingLogoAnchorEnd')
-  Element landingLogoAnchorEnd;
+class CancellationToken {
+  bool get cancelled => _cancelled;
+  bool _cancelled = false;
+  void cancel() => _cancelled = true;
 }
