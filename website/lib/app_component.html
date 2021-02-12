@@ -24,11 +24,9 @@
   <rz-gallery #rzGallery
               class="gallery"
               (focusin)="scrollPastLandingArea()"
-              (showArtworkDetail)="handleShowArtworkDetail($event)"
-              [artworks]="images"></rz-gallery>
+              [galleryModel]="galleryModel"></rz-gallery>
 </div>
 
 <focus-trap *ngIf="overlayVisible">
-  <rz-overlay (dismiss)="dismissOverlay()"
-              [artwork]="detailArtwork"></rz-overlay>
+  <rz-overlay [galleryModel]="galleryModel"></rz-overlay>
 </focus-trap>

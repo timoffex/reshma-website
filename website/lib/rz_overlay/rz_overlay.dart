@@ -7,6 +7,8 @@ import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_fab.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
 import 'package:reshmawebsite/artwork.dart';
+import 'package:reshmawebsite/gallery_controller.dart';
+import 'package:reshmawebsite/gallery_model.dart';
 
 @Component(
   selector: 'rz-overlay',
@@ -16,18 +18,54 @@ import 'package:reshmawebsite/artwork.dart';
     AutoDismissDirective,
     AutoFocusDirective,
     MaterialFabComponent,
-    MaterialIconComponent
+    MaterialIconComponent,
+    NgIf,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class RzOverlay {
+class RzOverlayComponent implements OnInit, OnDestroy {
   @Input()
-  Artwork artwork;
-
-  @Output()
-  Stream get dismiss => _dismiss.stream;
-  final _dismiss = StreamController.broadcast();
+  GalleryModel galleryModel;
 
   @visibleForTemplate
-  void handleDismiss() => _dismiss.add(null);
+  Artwork artwork;
+
+  @visibleForTemplate
+  bool get hasLeft => galleryModel.hasPrevArtwork;
+
+  @visibleForTemplate
+  bool get hasRight => galleryModel.hasNextArtwork;
+
+  @visibleForTemplate
+  void handleDismiss() => galleryModel.dismissOverlay();
+
+  @visibleForTemplate
+  void handleGoLeft() => galleryModel.focusPrevArtwork();
+
+  @visibleForTemplate
+  void handleGoRight() => galleryModel.focusNextArtwork();
+
+  @override
+  void ngOnInit() {
+    artwork = galleryModel.focusedArtwork;
+    _subscriptions = [
+      _controller.overlayOpened.listen((art) {
+        artwork = art;
+        _changeDetector.markForCheck();
+      }),
+    ];
+  }
+
+  @override
+  void ngOnDestroy() {
+    for (final subscription in _subscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  RzOverlayComponent(this._controller, this._changeDetector);
+
+  List<StreamSubscription> _subscriptions;
+  final GalleryController _controller;
+  final ChangeDetectorRef _changeDetector;
 }

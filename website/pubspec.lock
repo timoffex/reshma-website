@@ -142,7 +142,7 @@ packages:
     source: hosted
     version: "2.12.2"
   built_collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: built_collection
       url: "https://pub.dartlang.org"

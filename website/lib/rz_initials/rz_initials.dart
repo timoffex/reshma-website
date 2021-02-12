@@ -5,4 +5,4 @@ import 'package:angular/core.dart';
     templateUrl: 'rz_initials.html',
     styleUrls: ['rz_initials.css'],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class RzInitials {}
+class RzInitialsComponent {}

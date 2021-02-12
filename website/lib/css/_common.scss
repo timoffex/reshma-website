@@ -12,6 +12,15 @@ $themes: (
   )
 );
 
+@function _get_themed($theme-name, $color-name) {
+  @return map-get(map-get($themes, $theme-name), $color-name);
+}
+
 @mixin theme($property, $color-name) {
-  #{$property}: map-get(map-get($themes, "light-theme"), $color-name);
+  #{$property}: _get_themed("light-theme", $color-name);
+}
+
+@mixin with-current-theme() {
+  $chosen-theme: map-get($themes, "light-theme");
+  @content($chosen-theme)
 }

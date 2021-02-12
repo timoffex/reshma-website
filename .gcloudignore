@@ -5,5 +5,7 @@
 # Emacs files
 *~
 
+Makefile
+
 # Code for the website (should be copied to public/)
 website/

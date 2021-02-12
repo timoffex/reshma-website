@@ -4,7 +4,7 @@
      aria-label="artwork gallery">
   <button focusItem
           *ngFor="let artwork of artworks; let i=index"
-          (click)="handleClickArtwork(i, artwork)"
+          (click)="handleClickArtwork(i)"
           class="artwork"
           [attr.aria-label]="artwork.name">
     <img src="{{artwork.thumbnailUrl}}" alt="" class="artwork-image">

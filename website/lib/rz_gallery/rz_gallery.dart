@@ -1,11 +1,11 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/focus/focus_item.dart';
 import 'package:angular_components/focus/focus_list.dart';
+import 'package:built_collection/built_collection.dart';
 
 import 'package:reshmawebsite/artwork.dart';
+import 'package:reshmawebsite/gallery_model.dart';
 
 @Component(
     selector: 'rz-gallery',
@@ -13,24 +13,16 @@ import 'package:reshmawebsite/artwork.dart';
     styleUrls: ['rz_gallery.css'],
     directives: [NgFor, FocusItemDirective, FocusListDirective],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class RzGallery {
+class RzGalleryComponent {
   @Input()
-  List<Artwork> artworks;
-
-  @Output()
-  Stream<Artwork> get showArtworkDetail => _showArtworkDetail.stream;
-  final _showArtworkDetail = StreamController<Artwork>.broadcast();
-
-  void focus() {
-    if (!_hasFocus) {
-      container.focus(_lastIndex);
-    }
-  }
+  GalleryModel galleryModel;
 
   @visibleForTemplate
-  void handleClickArtwork(int index, Artwork artwork) {
-    _lastIndex = index;
-    _showArtworkDetail.add(artwork);
+  BuiltList<Artwork> get artworks => galleryModel.artworks;
+
+  @visibleForTemplate
+  void handleClickArtwork(int index) {
+    galleryModel.focusArtworkAtIndex(index);
   }
 
   @HostListener('focusin')
@@ -46,6 +38,6 @@ class RzGallery {
   @ViewChild('container', read: FocusListDirective)
   FocusListDirective container;
 
+  // TODO: Use this again
   bool _hasFocus = false;
-  int _lastIndex = 0;
 }

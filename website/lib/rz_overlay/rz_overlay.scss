@@ -1,4 +1,6 @@
-@import 'package:angular_components/css/material/material';
+@use 'package:angular_components/css/material/material' as material;
+@use 'package:angular_components/material_button/mixins' as mb;
+@use 'package:reshmawebsite/css/common' as common;
 
 :host {
   position: absolute;
@@ -23,7 +25,29 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  
-  width: 40 * $mat-grid;
-  height: 40 * $mat-grid;
+
+  height: 80vmin;
+}
+
+@include common.with-current-theme using ($theme) {
+  @include mb.button-background-color(
+    '.navigate-button', map-get($theme, common.$primary-color));
+  @include mb.button-background-color(
+    '.close-button', map-get($theme, common.$primary-color));
+}
+
+.navigate-button {  
+  &.left {
+    position: fixed;
+    top: 50%;
+    left: 10 * material.$mat-grid;
+    transform: translateY(-50%);
+  }
+
+  &.right {
+    position: fixed;
+    top: 50%;
+    right: 10 * material.$mat-grid;
+    transform: translateY(-50%);
+  }
 }

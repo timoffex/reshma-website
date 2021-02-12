@@ -5,10 +5,13 @@ import 'dart:math';
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:meta/meta.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 import 'artwork.dart';
+import 'gallery_controller.dart';
+import 'gallery_model.dart';
 import 'rz_gallery/rz_gallery.dart';
 import 'rz_initials/rz_initials.dart';
 import 'rz_overlay/rz_overlay.dart';
@@ -22,30 +25,17 @@ import 'rz_overlay/rz_overlay.dart';
       MaterialButtonComponent,
       NgFor,
       NgIf,
-      RzGallery,
-      RzInitials,
-      RzOverlay,
+      RzGalleryComponent,
+      RzInitialsComponent,
+      RzOverlayComponent,
     ],
-    providers: [materialProviders],
+    providers: [
+      materialProviders,
+      galleryModule,
+      galleryControllerModule,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent implements OnInit, OnDestroy {
-  @visibleForTemplate
-  final images = [
-    Artwork(name: 'Potions', thumbnailUrl: 'assets/potion_gallery.jpg'),
-    Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom_gallery.jpg'),
-    Artwork(name: 'Stump', thumbnailUrl: 'assets/stump_gallery.jpg'),
-    Artwork(name: 'Link Charm', thumbnailUrl: 'assets/link_charm_gallery.jpg'),
-    Artwork(
-        name: 'Kirby Pancakes',
-        thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg'),
-    Artwork(name: 'Pika Fruit', thumbnailUrl: 'assets/pika_fruit_gallery.jpg'),
-    Artwork(name: 'Girl', thumbnailUrl: 'assets/tennis_player_gallery.jpg'),
-    Artwork(name: 'Chuck', thumbnailUrl: 'assets/chuck_gallery.jpg'),
-    Artwork(
-        name: 'Wooden Charm',
-        thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg'),
-  ];
-
   @visibleForTemplate
   bool topBarVisible = false;
 
@@ -56,19 +46,7 @@ class AppComponent implements OnInit, OnDestroy {
   bool overlayVisible = false;
 
   @visibleForTemplate
-  Artwork detailArtwork;
-
-  @visibleForTemplate
-  void dismissOverlay() {
-    overlayVisible = false;
-    gallery.focus();
-  }
-
-  @visibleForTemplate
-  void handleShowArtworkDetail(Artwork artwork) {
-    detailArtwork = artwork;
-    overlayVisible = true;
-  }
+  final GalleryModel galleryModel;
 
   @visibleForTemplate
   void doScroll() {
@@ -77,7 +55,7 @@ class AppComponent implements OnInit, OnDestroy {
 
   @visibleForTemplate
   void scrollPastLandingArea() {
-    gallery.focus();
+    // gallery.focus();
     if (content.scrollTop < _galleryScrollPosition) {
       content.scrollTo(0, _galleryScrollPosition);
     }
@@ -92,14 +70,29 @@ class AppComponent implements OnInit, OnDestroy {
   void ngOnInit() {
     _updateLogo();
 
-    _resizeSubscription = window.onResize
-        .audit(Duration(milliseconds: 100))
-        .listen((_) => _updateLogo());
+    _subscriptions = [
+      window.onResize
+          .audit(Duration(milliseconds: 100))
+          .listen((_) => _updateLogo()),
+      _controller.overlayDismissed.listen((_) => _dismissOverlay()),
+      _controller.overlayOpened.listen((_) => _showOverlay()),
+    ];
   }
 
   @override
   void ngOnDestroy() {
-    _resizeSubscription?.cancel();
+    for (final subscription in _subscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  void _dismissOverlay() {
+    overlayVisible = false;
+    // gallery.focus();
+  }
+
+  void _showOverlay() {
+    overlayVisible = true;
   }
 
   void _updateLogo() {
@@ -141,7 +134,7 @@ class AppComponent implements OnInit, OnDestroy {
           max(0, durationSoFar.inMilliseconds / animDuration.inMilliseconds));
       final eased = (3 - 2 * t) * t * t;
       _setLogoBlend(appearing ? eased : 1 - eased);
-    _changeDetector.markForCheck();
+      _changeDetector.markForCheck();
 
       await Future.delayed(waitDuration);
       durationSoFar = DateTime.now().difference(startTime);
@@ -166,12 +159,14 @@ class AppComponent implements OnInit, OnDestroy {
     landingLogoElement.style.left = '${blend * 50}vw';
   }
 
-  AppComponent(this._changeDetector);
+  AppComponent(this._changeDetector, this._controller,
+      GalleryModelFactory galleryModelFactory)
+      : galleryModel = galleryModelFactory.create(_artworks);
 
   int get _galleryScrollPosition =>
       reshmaName.offsetTop - topBar.scrollHeight - 16;
 
-  StreamSubscription<void> _resizeSubscription;
+  List<StreamSubscription> _subscriptions;
 
   CancellationToken _currentLogoAnimationToken;
   bool _currentLogoAnimationDisappearing = false;
@@ -186,12 +181,10 @@ class AppComponent implements OnInit, OnDestroy {
   @ViewChild('reshmaName', read: Element)
   Element reshmaName;
 
-  @ViewChild('rzGallery')
-  RzGallery gallery;
-
   @ViewChild('landingLogoElement')
   Element landingLogoElement;
 
+  final GalleryController _controller;
   final ChangeDetectorRef _changeDetector;
 }
 
@@ -200,3 +193,19 @@ class CancellationToken {
   bool _cancelled = false;
   void cancel() => _cancelled = true;
 }
+
+final _artworks = [
+  Artwork(name: 'Potions', thumbnailUrl: 'assets/potion_gallery.jpg'),
+  Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom_gallery.jpg'),
+  Artwork(name: 'Stump', thumbnailUrl: 'assets/stump_gallery.jpg'),
+  Artwork(name: 'Link Charm', thumbnailUrl: 'assets/link_charm_gallery.jpg'),
+  Artwork(
+      name: 'Kirby Pancakes',
+      thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg'),
+  Artwork(name: 'Pika Fruit', thumbnailUrl: 'assets/pika_fruit_gallery.jpg'),
+  Artwork(name: 'Girl', thumbnailUrl: 'assets/tennis_player_gallery.jpg'),
+  Artwork(name: 'Chuck', thumbnailUrl: 'assets/chuck_gallery.jpg'),
+  Artwork(
+      name: 'Wooden Charm',
+      thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg'),
+].build();
