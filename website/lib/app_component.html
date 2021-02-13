@@ -1,6 +1,15 @@
-<div #landingLogoElement
+<div *ngIf="hasLandingSpace"
      class="landing-logo"
-     [class.invisible]="topBarVisible">
+     [class.invisible]="topBarVisible"
+     rzLogoAnimation
+     [initiallyVisible]="true"
+     [shouldLogoBeVisible]="shouldLogoBeVisible"
+     [maxSize]="300"
+     [minSize]="60"
+     [topVh]="33"
+     [leftVw]="50"
+     (beginAnimation)="handleLogoBeginAnimation"
+     (finishAnimation)="handleLogoFinishAnimation">
   <rz-initials></rz-initials>
 </div>
 
@@ -13,7 +22,7 @@
 </div>
 
 <div #content class="content" (scroll)="doScroll()">
-  <div class="landing-space">
+  <div *ngIf="hasLandingSpace" class="landing-space">
     <button (click)="scrollPastLandingArea()"
             (focus)="scrollToTop()"
             type="button"
