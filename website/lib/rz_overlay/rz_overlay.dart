@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
@@ -36,12 +37,15 @@ class RzOverlayComponent implements OnInit, OnDestroy {
   @visibleForTemplate
   bool get hasRight => galleryModel.hasNextArtwork;
 
+  @HostListener('keyup.escape')
   @visibleForTemplate
   void handleDismiss() => galleryModel.dismissOverlay();
 
+  @HostListener('keyup.arrowLeft')
   @visibleForTemplate
   void handleGoLeft() => galleryModel.focusPrevArtwork();
 
+  @HostListener('keyup.arrowRight')
   @visibleForTemplate
   void handleGoRight() => galleryModel.focusNextArtwork();
 

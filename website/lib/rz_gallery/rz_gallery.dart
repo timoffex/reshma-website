@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/focus/focus_item.dart';
@@ -5,6 +7,7 @@ import 'package:angular_components/focus/focus_list.dart';
 import 'package:built_collection/built_collection.dart';
 
 import 'package:reshmawebsite/artwork.dart';
+import 'package:reshmawebsite/gallery_controller.dart';
 import 'package:reshmawebsite/gallery_model.dart';
 
 @Component(
@@ -13,7 +16,7 @@ import 'package:reshmawebsite/gallery_model.dart';
     styleUrls: ['rz_gallery.css'],
     directives: [NgFor, FocusItemDirective, FocusListDirective],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class RzGalleryComponent {
+class RzGalleryComponent implements OnInit, OnDestroy {
   @Input()
   GalleryModel galleryModel;
 
@@ -38,6 +41,35 @@ class RzGalleryComponent {
   @ViewChild('container', read: FocusListDirective)
   FocusListDirective container;
 
-  // TODO: Use this again
+  @override
+  void ngOnInit() {
+    _subscriptions = [
+      _controller.galleryFocusIndexChange.listen(_setFocus),
+      _controller.galleryFocused.listen((_) => _ensureFocus())
+    ];
+  }
+
+  @override
+  void ngOnDestroy() {
+    for (final subscription in _subscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  void _setFocus(int index) {
+    container.focus(index);
+  }
+
+  void _ensureFocus() {
+    if (!_hasFocus) {
+      container.focus(0);
+    }
+  }
+
+  RzGalleryComponent(this._controller);
+
   bool _hasFocus = false;
+
+  List<StreamSubscription> _subscriptions;
+  final GalleryController _controller;
 }

@@ -4,9 +4,12 @@
   <rz-initials></rz-initials>
 </div>
 
-<div #topBar class="top-bar" [class.visible]="topBarVisible">
-  <rz-initials class="logo-top-bar"></rz-initials>
-  <span class="reshma-name">Reshma Zachariah</span>
+<div class="top-bar-container"
+     [class.visible]="topBarVisible">
+  <div #topBar class="top-bar" [class.visible]="topBarVisible">
+    <rz-initials class="logo-top-bar"></rz-initials>
+    <span class="reshma-name">Reshma Zachariah</span>
+  </div>
 </div>
 
 <div #content class="content" (scroll)="doScroll()">
