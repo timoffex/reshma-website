@@ -3,11 +3,17 @@ $primary-text-color: "primary-text-color";
 $secondary-text-color: "secondary-text-color";
 
 $light-theme: "light-theme";
+$dark-theme: "dark-theme";
 
 $themes: (
   $light-theme: (
     $primary-color: #fffff3,
     $primary-text-color: #444446,
+    $secondary-text-color: #bfb0a9
+  ),
+  $dark-theme: (
+    $primary-color: #444446,
+    $primary-text-color: #fffff3,
     $secondary-text-color: #bfb0a9
   )
 );
@@ -17,10 +23,21 @@ $themes: (
 }
 
 @mixin theme($property, $color-name) {
-  #{$property}: _get_themed("light-theme", $color-name);
+  @media (prefers-color-scheme: dark) {
+    #{$property}: _get_themed($dark-theme, $color-name);
+  }
+
+  @media (prefers-color-scheme: light) {
+    #{$property}: _get_themed($light-theme, $color-name);
+  }
 }
 
 @mixin with-current-theme() {
-  $chosen-theme: map-get($themes, "light-theme");
-  @content($chosen-theme)
+  @media (prefers-color-scheme: dark) {
+    @content(map-get($themes, $dark-theme));
+  }
+
+  @media (prefers-color-scheme: light) {
+    @content(map-get($themes, $light-theme));
+  }
 }
