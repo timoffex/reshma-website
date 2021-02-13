@@ -153,15 +153,18 @@ h2 {
 }
 
 .reshma-title {
-  font-family: 'Bebas Neue';
+  font-family: 'Rozha One';
+  font-size: 10vw;
+  line-height: 0.7;
   
-  line-height: 5 * material.$mat-grid;
-  height: 5 * material.$mat-grid;
-
   margin-bottom: 0;
 }
 
 .reshma-subtitle {
+  font-family: 'Rozha One';
+  font-size: 5vw;
+  line-height: 1;
+  
   @include common.theme('color', common.$secondary-text-color);
 
   margin-top: 0;

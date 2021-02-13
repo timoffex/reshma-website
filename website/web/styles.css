@@ -17,3 +17,13 @@ html, body {
   font-family: 'Bebas Neue';
   src: url(fonts/BebasNeue-Regular.ttf);
 }
+
+@font-face {
+  font-family: 'Rozha One';
+  src: url(fonts/RozhaOne-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url(fonts/RobotoMono-VariableFont_wght.ttf);
+}

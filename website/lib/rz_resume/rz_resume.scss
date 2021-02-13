@@ -13,11 +13,15 @@ $cell-padding-top: 4 * material.$mat-grid;
 tr {
   @include common.theme('color', common.$secondary-text-color);
   letter-spacing: 4px;
+  font-family: 'Roboto Mono';
+  font-size: 20px;
 
   vertical-align: top;
   height: $row-height;
 
   th {
+    width: 33%;
+    
     text-align: right;
     padding-top: $cell-padding-top;
     padding-right: 5 * material.$mat-grid;
@@ -28,20 +32,21 @@ tr {
   }
 
   td {
+    width: 67%;
+    
     text-align: left;
     padding-top: $cell-padding-top;
     padding-left: 5 * material.$mat-grid;
   }
   
   em {
-    font-family: 'Bebas Neue';
     font-style: normal;
-    font-size: 50px;
+    font-size: 2.5em;
     @include common.theme('color', common.$primary-text-color);
   }
 
   p {
-    font-size: 20px;
+    font-size: 1em;
     margin-top: 0;
   }
 }
