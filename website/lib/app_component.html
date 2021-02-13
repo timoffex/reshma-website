@@ -36,13 +36,16 @@
     </button>
   </div>
   <h1 #reshmaName class="centered-text reshma-title">reshma zachariah</h1>
-  <h2 class="centered-text reshma-subtitle">
+  <div class="centered-text reshma-subtitle">
     digital artist and designer
-  </h2>
+  </div>
+
+  <h2 class="section-name">artwork</h2>
   <rz-gallery #rzGallery
               class="gallery"
               (focusin)="scrollPastLandingArea()"
               [galleryModel]="galleryModel"></rz-gallery>
+
   <rz-resume></rz-resume>
 </div>
 

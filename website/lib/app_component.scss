@@ -148,10 +148,6 @@ rz-resume {
   margin-bottom: 20 * material.$mat-grid;
 }
 
-h2 {
-  font-weight: lighter;
-}
-
 .reshma-title {
   font-family: 'Rozha One';
   font-size: 10vw;
@@ -163,6 +159,7 @@ h2 {
 .reshma-subtitle {
   font-family: 'Rozha One';
   font-size: 5vw;
+  font-weight: lighter;
   line-height: 1;
   
   @include common.theme('color', common.$secondary-text-color);
@@ -172,4 +169,16 @@ h2 {
 
 .centered-text {
   text-align: center;
+}
+
+.section-name {
+  font-family: 'Rozha One';
+  font-size: 10vw;
+  text-align: end;
+
+  margin-bottom: 0;
+
+  position: relative;
+  right: 10vw;
+  line-height: 1;
 }
