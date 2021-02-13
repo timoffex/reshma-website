@@ -139,6 +139,12 @@ rz-overlay {
   z-index: 3;
 }
 
+rz-resume {
+  display: block;
+  margin-top: 20 * material.$mat-grid;
+  margin-bottom: 20 * material.$mat-grid;
+}
+
 h2 {
   font-weight: lighter;
 }

@@ -13,6 +13,7 @@ import 'rz_gallery/rz_gallery.dart';
 import 'rz_initials/rz_initials.dart';
 import 'rz_logo_animation.dart';
 import 'rz_overlay/rz_overlay.dart';
+import 'rz_resume/rz_resume.dart';
 
 @Component(
     selector: 'my-app',
@@ -27,6 +28,7 @@ import 'rz_overlay/rz_overlay.dart';
       RzInitialsComponent,
       RzLogoAnimationDirective,
       RzOverlayComponent,
+      RzResumeComponent,
     ],
     providers: [
       materialProviders,

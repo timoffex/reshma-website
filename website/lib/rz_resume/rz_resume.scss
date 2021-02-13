@@ -1,0 +1,47 @@
+@use 'package:angular_components/css/material/material' as material;
+@use 'package:reshmawebsite/css/common' as common;
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+$row-height: 20 * material.$mat-grid;
+$cell-padding-top: 4 * material.$mat-grid;
+
+tr {
+  @include common.theme('color', common.$secondary-text-color);
+  letter-spacing: 4px;
+
+  vertical-align: top;
+  height: $row-height;
+
+  th {
+    text-align: right;
+    padding-top: $cell-padding-top;
+    padding-right: 5 * material.$mat-grid;
+
+    @include common.with-current-theme() using ($theme) {
+      border-right: 1px solid map-get($theme, common.$primary-text-color);
+    }
+  }
+
+  td {
+    text-align: left;
+    padding-top: $cell-padding-top;
+    padding-left: 5 * material.$mat-grid;
+  }
+  
+  em {
+    font-family: 'Bebas Neue';
+    font-style: normal;
+    font-size: 50px;
+    @include common.theme('color', common.$primary-text-color);
+  }
+
+  p {
+    font-size: 20px;
+    margin-top: 0;
+  }
+}
