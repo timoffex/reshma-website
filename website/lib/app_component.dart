@@ -124,7 +124,6 @@ class AppComponent implements OnInit, OnDestroy {
     if (!appearing) scrollButtonVisible = false;
     _changeDetector.markForCheck();
 
-    const waitDuration = Duration(milliseconds: 20);
     var durationSoFar = Duration();
     while (durationSoFar < animDuration) {
       if (token.cancelled) return;
@@ -135,7 +134,7 @@ class AppComponent implements OnInit, OnDestroy {
       _setLogoBlend(appearing ? eased : 1 - eased);
       _changeDetector.markForCheck();
 
-      await Future.delayed(waitDuration);
+      await window.animationFrame;
       durationSoFar = DateTime.now().difference(startTime);
     }
 
