@@ -13,7 +13,8 @@
   <rz-initials></rz-initials>
 </div>
 
-<div class="top-bar-container"
+<div *ngIf="hasTopBar"
+     class="top-bar-container"
      [class.visible]="topBarVisible">
   <div #topBar class="top-bar" [class.visible]="topBarVisible">
     <rz-initials class="logo-top-bar"></rz-initials>
@@ -21,7 +22,10 @@
   </div>
 </div>
 
-<div #content class="content" (scroll)="doScroll()">
+<div #content
+     class="content"
+     (scroll)="doScroll()"
+     [class.with-top-bar]="hasTopBar">
   <div *ngIf="hasLandingSpace" class="landing-space">
     <button (click)="scrollPastLandingArea()"
             (focus)="scrollToTop()"
@@ -32,7 +36,9 @@
     </button>
   </div>
   <h1 #reshmaName class="centered-text reshma-title">Reshma Zachariah</h1>
-  <h2 class="centered-text reshma-subtitle">video game artist and graphic designer</h2>
+  <h2 class="centered-text reshma-subtitle">
+    video game artist and graphic designer
+  </h2>
   <rz-gallery #rzGallery
               class="gallery"
               (focusin)="scrollPastLandingArea()"

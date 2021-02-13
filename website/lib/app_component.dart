@@ -38,6 +38,12 @@ import 'rz_resume/rz_resume.dart';
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent implements OnInit, OnDestroy {
   @visibleForTemplate
+  bool hasTopBar = false;
+
+  @visibleForTemplate
+  bool hasLandingSpace = false;
+
+  @visibleForTemplate
   bool topBarVisible;
 
   @visibleForTemplate
@@ -45,9 +51,6 @@ class AppComponent implements OnInit, OnDestroy {
 
   @visibleForTemplate
   bool shouldLogoBeVisible = true;
-
-  @visibleForTemplate
-  bool hasLandingSpace = false;
 
   @visibleForTemplate
   bool overlayVisible = false;
