@@ -14,7 +14,7 @@
 .artwork {
   width: 40 * $mat-grid;
   height: 40 * $mat-grid;
-  margin: $mat-grid $mat-grid;
+  margin: 0;
   padding: 0;
   border: none;
 
@@ -23,10 +23,12 @@
     
   &:hover {
     @include shadow-elevation($dp: 16);
+    z-index: 1;
   }
 
   &:focus {
     @include shadow-elevation($dp: 16);
+    z-index: 1;
   }
 }
 

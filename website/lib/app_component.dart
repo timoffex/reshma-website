@@ -138,7 +138,7 @@ class AppComponent implements OnInit, OnDestroy {
       : galleryModel = galleryModelFactory.create(_artworks);
 
   int get _galleryScrollPosition =>
-      reshmaName.offsetTop - topBar.scrollHeight - 16;
+      reshmaName.offsetTop - (topBar?.scrollHeight ?? 0) - 16;
 
   List<StreamSubscription> _subscriptions;
 
