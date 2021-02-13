@@ -194,17 +194,40 @@ class CancellationToken {
 }
 
 final _artworks = [
-  Artwork(name: 'Potions', thumbnailUrl: 'assets/potion_gallery.jpg'),
-  Artwork(name: 'Mushroom', thumbnailUrl: 'assets/mushroom_gallery.jpg'),
-  Artwork(name: 'Stump', thumbnailUrl: 'assets/stump_gallery.jpg'),
-  Artwork(name: 'Link Charm', thumbnailUrl: 'assets/link_charm_gallery.jpg'),
+  Artwork(
+      name: 'Potions',
+      thumbnailUrl: 'assets/potion_gallery.jpg',
+      fullUrl: 'assets/potion.jpg'),
+  Artwork(
+      name: 'Mushroom',
+      thumbnailUrl: 'assets/mushroom_gallery.jpg',
+      fullUrl: 'assets/mushroom.jpg'),
+  Artwork(
+      name: 'Stump',
+      thumbnailUrl: 'assets/stump_gallery.jpg',
+      fullUrl: 'assets/stump.jpg'),
+  Artwork(
+      name: 'Link Charm',
+      thumbnailUrl: 'assets/link_charm_gallery.jpg',
+      fullUrl: 'assets/link_charm.jpg'),
   Artwork(
       name: 'Kirby Pancakes',
-      thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg'),
-  Artwork(name: 'Pika Fruit', thumbnailUrl: 'assets/pika_fruit_gallery.jpg'),
-  Artwork(name: 'Girl', thumbnailUrl: 'assets/tennis_player_gallery.jpg'),
-  Artwork(name: 'Chuck', thumbnailUrl: 'assets/chuck_gallery.jpg'),
+      thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg',
+      fullUrl: 'assets/kirby_pancakes.jpg'),
+  Artwork(
+      name: 'Pika Fruit',
+      thumbnailUrl: 'assets/pika_fruit_gallery.jpg',
+      fullUrl: 'assets/pika_fruit.jpg'),
+  Artwork(
+      name: 'Girl',
+      thumbnailUrl: 'assets/tennis_player_gallery.jpg',
+      fullUrl: 'assets/tennis_player.jpg'),
+  Artwork(
+      name: 'Chuck',
+      thumbnailUrl: 'assets/chuck_gallery.jpg',
+      fullUrl: 'assets/chuck.jpg'),
   Artwork(
       name: 'Wooden Charm',
-      thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg'),
+      thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg',
+      fullUrl: 'assets/milk_coffee_charm.jpg'),
 ].build();
