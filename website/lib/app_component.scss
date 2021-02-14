@@ -142,6 +142,10 @@ rz-overlay {
   z-index: 3;
 }
 
+rz-video {
+  margin: 20 * material.$mat-grid auto;
+}
+
 rz-resume {
   display: block;
   margin-top: 20 * material.$mat-grid;

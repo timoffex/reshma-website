@@ -14,6 +14,7 @@ import 'rz_initials/rz_initials.dart';
 import 'rz_logo_animation.dart';
 import 'rz_overlay/rz_overlay.dart';
 import 'rz_resume/rz_resume.dart';
+import 'rz_video/rz_video.dart';
 
 @Component(
     selector: 'my-app',
@@ -29,6 +30,7 @@ import 'rz_resume/rz_resume.dart';
       RzLogoAnimationDirective,
       RzOverlayComponent,
       RzResumeComponent,
+      RzVideoComponent,
     ],
     providers: [
       materialProviders,

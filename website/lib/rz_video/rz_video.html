@@ -1,0 +1,13 @@
+<video #video
+       loop
+       preload="metadata"
+       (click)="pauseVideo()">
+  <ng-content></ng-content>
+</video>
+<div *ngIf="!videoPlaying" class="controls">
+  <div class="play-button">
+    <material-fab raised (trigger)="playVideo()">
+      <material-icon icon="play_arrow"></material-icon>
+    </material-fab>
+  </div>
+</div>
