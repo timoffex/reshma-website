@@ -17,20 +17,36 @@ class RzVideoComponent implements OnInit {
 
   @visibleForTemplate
   void playVideo() {
+    // A terrible hack to make it possible to pause the video by pressing space.
+    // Without this, pressing space to pause the video immediately activates the
+    // play button.
+    if (DateTime.now().compareTo(_timeCanPlayVideo) < 0) return;
+
     _video.play();
+    _video.focus();
     videoPlaying = true;
   }
 
   @visibleForTemplate
-  void pauseVideo() {
+  void pauseVideo(Event event) {
+    // event.stopImmediatePropagation();
     _video.pause();
     videoPlaying = false;
+    _timeCanPlayVideo = DateTime.now().add(Duration(milliseconds: 500));
+
+    // Run after changes to give Angular time to create the element.
+    _ngZone.runAfterChangesObserved(() {
+      playButton.focus();
+    });
   }
 
   @ViewChild('video')
   set videoElement(Element element) {
     _video = element as VideoElement;
   }
+
+  @ViewChild('playButton', read: Element)
+  Element playButton;
 
   @override
   void ngOnInit() {
@@ -43,5 +59,9 @@ class RzVideoComponent implements OnInit {
     });
   }
 
+  RzVideoComponent(this._ngZone);
+
+  DateTime _timeCanPlayVideo = DateTime.fromMicrosecondsSinceEpoch(0);
   VideoElement _video;
+  final NgZone _ngZone;
 }
