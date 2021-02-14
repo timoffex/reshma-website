@@ -14,7 +14,7 @@ tr {
   @include common.theme('color', common.$secondary-text-color);
   letter-spacing: 4px;
   font-family: 'Roboto Mono';
-  font-size: 20px;
+  font-size: min(20px, 2vw);
 
   vertical-align: top;
   height: $row-height;
@@ -24,7 +24,7 @@ tr {
     
     text-align: right;
     padding-top: $cell-padding-top;
-    padding-right: 5 * material.$mat-grid;
+    padding-right: min(#{5 * material.$mat-grid}, 5vw);
 
     @include common.with-current-theme() using ($theme) {
       border-right: 1px solid map-get($theme, common.$primary-text-color);
@@ -36,7 +36,7 @@ tr {
     
     text-align: left;
     padding-top: $cell-padding-top;
-    padding-left: 5 * material.$mat-grid;
+    padding-left: min(#{5 * material.$mat-grid}, 5vw);
   }
   
   em {
