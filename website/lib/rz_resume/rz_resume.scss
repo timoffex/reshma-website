@@ -7,7 +7,7 @@ table {
   border-collapse: collapse;
 }
 
-$row-height: 20 * material.$mat-grid;
+$row-height: min(#{20 * material.$mat-grid}, 20vw);
 $cell-padding-top: 4 * material.$mat-grid;
 
 tr {
