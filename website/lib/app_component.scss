@@ -134,10 +134,6 @@ $top-bar-height: 8 * material.$mat-grid;
   @include common.theme("background-color", common.$primary-color);
 }
 
-.gallery {
-  min-height: 100vh;
-}
-
 rz-overlay {
   z-index: 3;
 }
