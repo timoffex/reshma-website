@@ -43,7 +43,7 @@ class RzOverlayComponent {
   @visibleForTemplate
   void handleGoLeft() {
     if (hasLeft) {
-      artwork = artwork.prev;
+      artwork.prev.focus();
     }
   }
 
@@ -51,7 +51,7 @@ class RzOverlayComponent {
   @visibleForTemplate
   void handleGoRight() {
     if (hasRight) {
-      artwork = artwork.next;
+      artwork.next.focus();
     }
   }
 }
