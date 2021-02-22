@@ -14,10 +14,11 @@ website:
 runlocally: website
 	bundle exec ruby app.rb -p 8080
 
+# https://cloud.google.com/appengine/docs/standard/ruby/testing-and-deploying-your-app#testing-on-app-engine
 .PHONY: deploy
 deploy: website
-	gcloud app deploy
-
+	gcloud app deploy --no-promote
+	echo "New version is not yet receiving traffic. Go to https://console.cloud.google.com/appengine/versions. See help for 'gcloud app versions'"
 
 
 .PHONY: clean
