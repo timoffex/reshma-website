@@ -44,7 +44,7 @@ class GalleryModel {
     }
   }
 
-  _GalleryPosition _shown;
+  Artwork _shown;
 
   GalleryModel._(BuiltList<GalleryArtwork> artworks,
       BuiltList<GalleryArtwork> merch, this._gallery)
@@ -61,19 +61,14 @@ class GalleryModel {
     }
   }
 
-  void _focus(_GalleryPosition position) {
-    if (position.index < 0 ||
-        position.index >= _artworksIn(position.section).length) {
-      _shown = null;
-      return;
-    }
-
-    _shown = position;
-    _gallery.showOverlay(_artworkAt(_shown));
+  void _focus(Artwork artwork) {
+    assert(artwork != null);
+    _shown = artwork;
+    _gallery.showOverlay(_shown);
   }
 
   void dismissOverlay() {
-    final lastShown = _artworkAt(_shown);
+    final lastShown = _shown;
     _shown = null;
     _gallery.dismissOverlay();
     _gallery.focusArtwork(lastShown);
@@ -97,7 +92,7 @@ enum _GallerySection {
 
 class GalleryArtwork extends Artwork {
   @override
-  void focus() => _model._focus(_position);
+  void focus() => _model._focus(this);
 
   @override
   Artwork get prev => _model._artworkAt(_position.prev);
