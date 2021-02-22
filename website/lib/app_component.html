@@ -62,5 +62,6 @@
 </div>
 
 <focus-trap *ngIf="overlayVisible">
-  <rz-overlay [galleryModel]="galleryModel"></rz-overlay>
+  <rz-overlay [artwork]="overlayArtwork"
+              (onDismiss)="handleDismissOverlay()"></rz-overlay>
 </focus-trap>

@@ -7,6 +7,9 @@ abstract class Artwork {
 
   void focus();
 
+  Artwork get prev;
+  Artwork get next;
+
   Artwork(
       {@required this.name,
       @required this.thumbnailUrl,

@@ -7,8 +7,6 @@ import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_fab.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
 import 'package:reshmawebsite/artwork.dart';
-import 'package:reshmawebsite/gallery_controller.dart';
-import 'package:reshmawebsite/gallery_model.dart';
 
 @Component(
   selector: 'rz-overlay',
@@ -23,52 +21,37 @@ import 'package:reshmawebsite/gallery_model.dart';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class RzOverlayComponent implements OnInit, OnDestroy {
+class RzOverlayComponent {
   @Input()
-  GalleryModel galleryModel;
-
-  @visibleForTemplate
   Artwork artwork;
 
-  @visibleForTemplate
-  bool get hasLeft => galleryModel.hasPrevArtwork;
+  @Output()
+  Stream<void> get onDismiss => _onDismiss.stream;
+  final _onDismiss = StreamController<void>.broadcast();
 
   @visibleForTemplate
-  bool get hasRight => galleryModel.hasNextArtwork;
+  bool get hasLeft => artwork.prev != null;
+
+  @visibleForTemplate
+  bool get hasRight => artwork.next != null;
 
   @HostListener('keyup.escape')
   @visibleForTemplate
-  void handleDismiss() => galleryModel.dismissOverlay();
+  void handleDismiss() => _onDismiss.add(null);
 
   @HostListener('keyup.arrowLeft')
   @visibleForTemplate
-  void handleGoLeft() => galleryModel.focusPrevArtwork();
-
-  @HostListener('keyup.arrowRight')
-  @visibleForTemplate
-  void handleGoRight() => galleryModel.focusNextArtwork();
-
-  @override
-  void ngOnInit() {
-    artwork = galleryModel.focusedArtwork;
-    _subscriptions = [
-      _controller.overlayOpened.listen((art) {
-        artwork = art;
-        _changeDetector.markForCheck();
-      }),
-    ];
-  }
-
-  @override
-  void ngOnDestroy() {
-    for (final subscription in _subscriptions) {
-      subscription.cancel();
+  void handleGoLeft() {
+    if (hasLeft) {
+      artwork = artwork.prev;
     }
   }
 
-  RzOverlayComponent(this._controller, this._changeDetector);
-
-  List<StreamSubscription> _subscriptions;
-  final GalleryController _controller;
-  final ChangeDetectorRef _changeDetector;
+  @HostListener('keyup.arrowRight')
+  @visibleForTemplate
+  void handleGoRight() {
+    if (hasRight) {
+      artwork = artwork.next;
+    }
+  }
 }

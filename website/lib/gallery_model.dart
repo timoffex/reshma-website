@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:meta/meta.dart';
@@ -26,17 +24,13 @@ class GalleryModel {
 
   final GalleryController _gallery;
 
-  /// The currently focused artwork if the overlay is opened, or null otherwise.
-  Artwork get focusedArtwork {
-    if (_shown == null) return null;
+  Artwork _artworkAt(_GalleryPosition position) {
+    final section = _artworksIn(position.section);
+    if (section == null) return null;
 
-    return focusedSection[_shown.index];
-  }
-
-  BuiltList<Artwork> get focusedSection {
-    if (_shown == null) return null;
-
-    return _artworksIn(_shown.section);
+    if (position.index < 0) return null;
+    if (position.index > section.length - 1) return null;
+    return section[position.index];
   }
 
   BuiltList<Artwork> _artworksIn(_GallerySection section) {
@@ -50,52 +44,37 @@ class GalleryModel {
     }
   }
 
-  /// Whether there is another artwork to the left of the currently focused one,
-  /// assuming that [focusedArtwork] is non-null.
-  bool get hasPrevArtwork => _shown.index > 0;
-
-  /// Whether there is another artwork to the right of the currently focused
-  /// one, assuming that [focusedArtwork] is non-null.
-  bool get hasNextArtwork => _shown.index < focusedSection.length - 1;
-
-  bool _overlayOpen = false;
-
-  _GallerySelection _shown;
+  _GalleryPosition _shown;
 
   GalleryModel._(BuiltList<GalleryArtwork> artworks,
       BuiltList<GalleryArtwork> merch, this._gallery)
       : artworks = artworks,
         merch = merch {
     for (var i = 0; i < artworks.length; ++i) {
-      artworks[i]
-          ._onFocus
-          .stream
-          .listen((_) => _focusSectionAtIndex(_GallerySection.artworks, i));
+      artworks[i]._model = this;
+      artworks[i]._position = _GalleryPosition(_GallerySection.artworks, i);
     }
 
     for (var i = 0; i < merch.length; ++i) {
-      merch[i]
-          ._onFocus
-          .stream
-          .listen((_) => _focusSectionAtIndex(_GallerySection.merch, i));
+      merch[i]._model = this;
+      merch[i]._position = _GalleryPosition(_GallerySection.merch, i);
     }
   }
 
-  void _focusSectionAtIndex(_GallerySection section, int index) {
-    if (index < 0 || index >= _artworksIn(section).length) {
+  void _focus(_GalleryPosition position) {
+    if (position.index < 0 ||
+        position.index >= _artworksIn(position.section).length) {
       _shown = null;
       return;
     }
 
-    _shown = _GallerySelection(section, index);
-    _overlayOpen = true;
-    _gallery.showOverlay(focusedArtwork);
+    _shown = position;
+    _gallery.showOverlay(_artworkAt(_shown));
   }
 
   void dismissOverlay() {
-    final lastShown = focusedArtwork;
+    final lastShown = _artworkAt(_shown);
     _shown = null;
-    _overlayOpen = false;
     _gallery.dismissOverlay();
     _gallery.focusArtwork(lastShown);
   }
@@ -103,32 +82,16 @@ class GalleryModel {
   void focusArtworks() {
     _gallery.focusArtworks();
   }
-
-  void focusNextArtwork() {
-    if (!_overlayOpen) return;
-    if (_shown.index < focusedSection.length - 1) {
-      _shown = _shown.next;
-      _gallery.showOverlay(focusedArtwork);
-    }
-  }
-
-  void focusPrevArtwork() {
-    if (!_overlayOpen) return;
-    if (_shown.index > 0) {
-      _shown = _shown.prev;
-      _gallery.showOverlay(focusedArtwork);
-    }
-  }
 }
 
-class _GallerySelection {
+class _GalleryPosition {
   final _GallerySection section;
   final int index;
 
-  _GallerySelection get next => _GallerySelection(section, index + 1);
-  _GallerySelection get prev => _GallerySelection(section, index - 1);
+  _GalleryPosition get next => _GalleryPosition(section, index + 1);
+  _GalleryPosition get prev => _GalleryPosition(section, index - 1);
 
-  _GallerySelection(this.section, this.index);
+  _GalleryPosition(this.section, this.index);
 }
 
 enum _GallerySection {
@@ -138,9 +101,16 @@ enum _GallerySection {
 
 class GalleryArtwork extends Artwork {
   @override
-  void focus() => _onFocus.add(null);
+  void focus() => _model._focus(_position);
 
-  final _onFocus = StreamController<void>.broadcast(sync: true);
+  @override
+  Artwork get prev => _model._artworkAt(_position.prev);
+
+  @override
+  Artwork get next => _model._artworkAt(_position.next);
+
+  GalleryModel _model; // late-bound
+  _GalleryPosition _position; // late-bound
 
   GalleryArtwork(
       {@required String name,

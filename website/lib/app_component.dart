@@ -55,7 +55,10 @@ class AppComponent implements OnInit, OnDestroy {
   bool shouldLogoBeVisible = true;
 
   @visibleForTemplate
-  bool overlayVisible = false;
+  bool get overlayVisible => overlayArtwork != null;
+
+  @visibleForTemplate
+  Artwork overlayArtwork;
 
   @visibleForTemplate
   final GalleryModel galleryModel;
@@ -102,6 +105,11 @@ class AppComponent implements OnInit, OnDestroy {
     scrollButtonVisible = appeared;
   }
 
+  @visibleForTemplate
+  void handleDismissOverlay() {
+    galleryModel.dismissOverlay();
+  }
+
   @override
   void ngOnInit() {
     if (hasLandingSpace) {
@@ -114,7 +122,7 @@ class AppComponent implements OnInit, OnDestroy {
 
     _subscriptions = [
       _controller.overlayDismissed.listen((_) => _dismissOverlay()),
-      _controller.overlayOpened.listen((_) => _showOverlay()),
+      _controller.overlayOpened.listen(_showOverlay),
     ];
   }
 
@@ -126,11 +134,11 @@ class AppComponent implements OnInit, OnDestroy {
   }
 
   void _dismissOverlay() {
-    overlayVisible = false;
+    overlayArtwork = null;
   }
 
-  void _showOverlay() {
-    overlayVisible = true;
+  void _showOverlay(Artwork artwork) {
+    overlayArtwork = artwork;
   }
 
   void _updateLogo() {
