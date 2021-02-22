@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:meta/meta.dart';
 
 import 'artwork.dart';
 import 'gallery_controller.dart';
@@ -9,7 +12,8 @@ const galleryModule = Module(provide: [ClassProvider(GalleryModelFactory)]);
 class GalleryModelFactory {
   GalleryModelFactory(this._gallery);
 
-  GalleryModel create(BuiltList<Artwork> artworks, BuiltList<Artwork> merch) =>
+  GalleryModel create(BuiltList<GalleryArtwork> artworks,
+          BuiltList<GalleryArtwork> merch) =>
       GalleryModel._(artworks, merch, _gallery);
 
   final GalleryController _gallery;
@@ -58,16 +62,21 @@ class GalleryModel {
 
   _GallerySelection _shown;
 
-  GalleryModel._(this.artworks, this.merch, this._gallery) {
+  GalleryModel._(BuiltList<GalleryArtwork> artworks,
+      BuiltList<GalleryArtwork> merch, this._gallery)
+      : artworks = artworks,
+        merch = merch {
     for (var i = 0; i < artworks.length; ++i) {
       artworks[i]
-          .onFocus
+          ._onFocus
+          .stream
           .listen((_) => _focusSectionAtIndex(_GallerySection.artworks, i));
     }
 
     for (var i = 0; i < merch.length; ++i) {
       merch[i]
-          .onFocus
+          ._onFocus
+          .stream
           .listen((_) => _focusSectionAtIndex(_GallerySection.merch, i));
     }
   }
@@ -125,4 +134,17 @@ class _GallerySelection {
 enum _GallerySection {
   artworks,
   merch,
+}
+
+class GalleryArtwork extends Artwork {
+  @override
+  void focus() => _onFocus.add(null);
+
+  final _onFocus = StreamController<void>.broadcast(sync: true);
+
+  GalleryArtwork(
+      {@required String name,
+      @required String thumbnailUrl,
+      @required String fullUrl})
+      : super(name: name, thumbnailUrl: thumbnailUrl, fullUrl: fullUrl);
 }

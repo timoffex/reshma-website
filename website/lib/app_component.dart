@@ -163,50 +163,50 @@ class AppComponent implements OnInit, OnDestroy {
 }
 
 final _artworks = [
-  Artwork(
+  GalleryArtwork(
       name: 'Potions',
       thumbnailUrl: 'assets/potion_gallery.jpg',
       fullUrl: 'assets/potion.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Mushroom',
       thumbnailUrl: 'assets/mushroom_gallery.jpg',
       fullUrl: 'assets/mushroom.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Stump',
       thumbnailUrl: 'assets/stump_gallery.jpg',
       fullUrl: 'assets/stump.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Kirby Pancakes',
       thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg',
       fullUrl: 'assets/kirby_pancakes.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Pika Fruit',
       thumbnailUrl: 'assets/pika_fruit_gallery.jpg',
       fullUrl: 'assets/pika_fruit.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Girl',
       thumbnailUrl: 'assets/tennis_player_gallery.jpg',
       fullUrl: 'assets/tennis_player.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Chuck',
       thumbnailUrl: 'assets/chuck_gallery.jpg',
       fullUrl: 'assets/chuck.jpg'),
 ].build();
 
 final _merch = [
-  Artwork(
+  GalleryArtwork(
       name: 'Link Charm',
       thumbnailUrl: 'assets/link_charm_gallery.jpg',
       fullUrl: 'assets/link_charm.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Wooden Charm',
       thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg',
       fullUrl: 'assets/milk_coffee_charm.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Froggy Shirt',
       thumbnailUrl: 'assets/froggy_shirt_gallery.jpg',
       fullUrl: 'assets/froggy_shirt.jpg'),
-  Artwork(
+  GalleryArtwork(
       name: 'Froggy Sweater',
       thumbnailUrl: 'assets/froggy_sweater_gallery.jpg',
       fullUrl: 'assets/froggy_sweater.jpg'),
