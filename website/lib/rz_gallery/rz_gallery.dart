@@ -19,22 +19,9 @@ class RzGalleryComponent implements OnInit, OnDestroy {
   @Input()
   BuiltList<Artwork> artworks;
 
-  @Input()
-  bool isArtworkSection = false;
-
   @visibleForTemplate
   void handleClickArtwork(Artwork artwork) {
     artwork.focus();
-  }
-
-  @HostListener('focusin')
-  void onFocusIn() {
-    _hasFocus = true;
-  }
-
-  @HostListener('focusout')
-  void onFocusOut() {
-    _hasFocus = false;
   }
 
   @ViewChild('container', read: FocusListDirective)
@@ -44,8 +31,6 @@ class RzGalleryComponent implements OnInit, OnDestroy {
   void ngOnInit() {
     _subscriptions = [
       _controller.galleryFocusChange.listen(_setFocus),
-      if (isArtworkSection)
-        _controller.artworksFocused.listen((_) => _ensureFocus())
     ];
   }
 
@@ -64,15 +49,7 @@ class RzGalleryComponent implements OnInit, OnDestroy {
     }
   }
 
-  void _ensureFocus() {
-    if (!_hasFocus) {
-      container.focus(0);
-    }
-  }
-
   RzGalleryComponent(this._controller);
-
-  bool _hasFocus = false;
 
   List<StreamSubscription> _subscriptions;
   final GalleryController _controller;

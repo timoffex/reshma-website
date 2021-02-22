@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
@@ -10,8 +9,6 @@ import 'artwork.dart';
 import 'gallery_controller.dart';
 import 'gallery_model.dart';
 import 'rz_gallery/rz_gallery.dart';
-import 'rz_initials/rz_initials.dart';
-import 'rz_logo_animation.dart';
 import 'rz_overlay/rz_overlay.dart';
 import 'rz_resume/rz_resume.dart';
 import 'rz_video/rz_video.dart';
@@ -26,8 +23,6 @@ import 'rz_video/rz_video.dart';
       NgFor,
       NgIf,
       RzGalleryComponent,
-      RzInitialsComponent,
-      RzLogoAnimationDirective,
       RzOverlayComponent,
       RzResumeComponent,
       RzVideoComponent,
@@ -39,21 +34,6 @@ import 'rz_video/rz_video.dart';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent implements OnInit, OnDestroy {
-  @visibleForTemplate
-  bool hasTopBar = false;
-
-  @visibleForTemplate
-  bool hasLandingSpace = false;
-
-  @visibleForTemplate
-  bool topBarVisible;
-
-  @visibleForTemplate
-  bool scrollButtonVisible;
-
-  @visibleForTemplate
-  bool shouldLogoBeVisible = true;
-
   @visibleForTemplate
   bool get overlayVisible => overlayArtwork != null;
 
@@ -70,56 +50,12 @@ class AppComponent implements OnInit, OnDestroy {
   BuiltList<Artwork> get merch => _merch;
 
   @visibleForTemplate
-  void doScroll() {
-    _updateLogo();
-  }
-
-  @visibleForTemplate
-  void scrollPastLandingArea() {
-    if (content.scrollTop < _galleryScrollPosition) {
-      content.scrollTo(0, _galleryScrollPosition);
-    }
-  }
-
-  @visibleForTemplate
-  void scrollToTop() {
-    content.scrollTo(0, 0);
-  }
-
-  @visibleForTemplate
-  void handleLogoBeginAnimation(bool appearing) {
-    if (appearing) {
-      // If appearing, remove the top bar but don't make scroll button
-      // immediately visible.
-      topBarVisible = false;
-    } else {
-      // If disappearing, remove the scroll button but don't immediately show
-      // the top bar.
-      scrollButtonVisible = false;
-    }
-  }
-
-  @visibleForTemplate
-  void handleLogoFinishAnimation(bool appeared) {
-    topBarVisible = !appeared;
-    scrollButtonVisible = appeared;
-  }
-
-  @visibleForTemplate
   void handleDismissOverlay() {
     galleryModel.dismissOverlay();
   }
 
   @override
   void ngOnInit() {
-    if (hasLandingSpace) {
-      topBarVisible = false;
-      scrollButtonVisible = true;
-    } else {
-      topBarVisible = true;
-      scrollButtonVisible = false;
-    }
-
     _subscriptions = [
       _controller.overlayDismissed.listen((_) => _dismissOverlay()),
       _controller.overlayOpened.listen(_showOverlay),
@@ -141,33 +77,12 @@ class AppComponent implements OnInit, OnDestroy {
     overlayArtwork = artwork;
   }
 
-  void _updateLogo() {
-    if (!hasLandingSpace) return;
-
-    shouldLogoBeVisible = content.scrollTop < 100;
-    _changeDetector.markForCheck();
-  }
-
-  AppComponent(this._changeDetector, this._controller,
-      GalleryModelFactory galleryModelFactory)
+  AppComponent(this._controller, GalleryModelFactory galleryModelFactory)
       : galleryModel = galleryModelFactory.create(_artworks, _merch);
-
-  int get _galleryScrollPosition =>
-      reshmaName.offsetTop - (topBar?.scrollHeight ?? 0) - 16;
 
   List<StreamSubscription> _subscriptions;
 
-  @ViewChild('topBar')
-  Element topBar;
-
-  @ViewChild('content')
-  Element content;
-
-  @ViewChild('reshmaName', read: Element)
-  Element reshmaName;
-
   final GalleryController _controller;
-  final ChangeDetectorRef _changeDetector;
 }
 
 final _artworks = [

@@ -78,10 +78,6 @@ class GalleryModel {
     _gallery.dismissOverlay();
     _gallery.focusArtwork(lastShown);
   }
-
-  void focusArtworks() {
-    _gallery.focusArtworks();
-  }
 }
 
 class _GalleryPosition {

@@ -1,50 +1,12 @@
-<div *ngIf="hasLandingSpace"
-     class="landing-logo"
-     [class.invisible]="topBarVisible"
-     rzLogoAnimation
-     [initiallyVisible]="true"
-     [shouldLogoBeVisible]="shouldLogoBeVisible"
-     [maxSize]="300"
-     [minSize]="60"
-     [topVh]="33"
-     [leftVw]="50"
-     (beginAnimation)="handleLogoBeginAnimation"
-     (finishAnimation)="handleLogoFinishAnimation">
-  <rz-initials></rz-initials>
-</div>
+<div class="content">
 
-<div *ngIf="hasTopBar"
-     class="top-bar-container"
-     [class.visible]="topBarVisible">
-  <div #topBar class="top-bar" [class.visible]="topBarVisible">
-    <rz-initials class="logo-top-bar"></rz-initials>
-    <span class="reshma-name">Reshma Zachariah</span>
-  </div>
-</div>
-
-<div #content
-     class="content"
-     (scroll)="doScroll()"
-     [class.with-top-bar]="hasTopBar">
-  <div *ngIf="hasLandingSpace" class="landing-space">
-    <button (click)="scrollPastLandingArea()"
-            (focus)="scrollToTop()"
-            type="button"
-            class="landing-page-arrow"
-            [class.visible]="scrollButtonVisible">
-      enter
-    </button>
-  </div>
-  <h1 #reshmaName class="centered-text reshma-title">reshma zachariah</h1>
+  <h1 class="centered-text reshma-title">reshma zachariah</h1>
   <div class="centered-text reshma-subtitle">
     digital artist and designer
   </div>
 
   <h2 class="section-name">artwork</h2>
-  <rz-gallery #rzGallery
-              (focusin)="scrollPastLandingArea()"
-              [artworks]="artworks"
-              [isArtworkSection]="true"></rz-gallery>
+  <rz-gallery [artworks]="artworks"></rz-gallery>
 
   <rz-video>
     <source src="assets/design_reel.mp4"
@@ -53,10 +15,7 @@
   </rz-video>
 
   <h2 class="section-name">merch</h2>
-  <rz-gallery #rzGallery
-              (focusin)="scrollPastLandingArea()"
-              [artworks]="merch"
-              [isArtworkSection]="false"></rz-gallery>
+  <rz-gallery [artworks]="merch"></rz-gallery>
 
   <rz-resume></rz-resume>
 </div>

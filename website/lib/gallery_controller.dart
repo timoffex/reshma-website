@@ -25,11 +25,6 @@ class GalleryController {
   Stream<Artwork> get galleryFocusChange => _galleryFocusChange.stream;
   final _galleryFocusChange = StreamController<Artwork>.broadcast();
 
-  /// Stream that fires when components should ensure browser focus is in the
-  /// artworks section of the gallery.
-  Stream get artworksFocused => _artworksFocused.stream;
-  final _artworksFocused = StreamController.broadcast();
-
   /// Commands the overlay to show a new artwork.
   ///
   /// If the overlay was not opened before, this will open it. This will then
@@ -41,11 +36,6 @@ class GalleryController {
   /// Commands the overlay to close.
   void dismissOverlay() {
     _overlayDismissed.add(null);
-  }
-
-  /// Ensures browser focus is in the artworks section of the gallery.
-  void focusArtworks() {
-    _artworksFocused.add(null);
   }
 
   /// Commands the browser to set focus to the specified artwork.
