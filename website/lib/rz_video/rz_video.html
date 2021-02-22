@@ -1,8 +1,8 @@
 <video #video
        loop
        preload="metadata"
-       (click)="pauseVideo"
-       (keydown.space)="pauseVideo"
+       (click)="pauseVideo()"
+       (keydown.space)="pauseVideo()"
        [attr.tabindex]="videoPlaying ? 0 : -1">
   <ng-content></ng-content>
 </video>

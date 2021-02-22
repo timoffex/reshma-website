@@ -9,8 +9,8 @@ const galleryModule = Module(provide: [ClassProvider(GalleryModelFactory)]);
 class GalleryModelFactory {
   GalleryModelFactory(this._gallery);
 
-  GalleryModel create(BuiltList<Artwork> artworks) =>
-      GalleryModel._(artworks, _gallery);
+  GalleryModel create(BuiltList<Artwork> artworks, BuiltList<Artwork> merch) =>
+      GalleryModel._(artworks, merch, _gallery);
 
   final GalleryController _gallery;
 }
@@ -18,62 +18,111 @@ class GalleryModelFactory {
 /// Model for the "gallery page" of Reshma's website.
 class GalleryModel {
   final BuiltList<Artwork> artworks;
+  final BuiltList<Artwork> merch;
 
   final GalleryController _gallery;
 
   /// The currently focused artwork if the overlay is opened, or null otherwise.
-  Artwork get focusedArtwork =>
-      _shownIndex != null ? artworks[_shownIndex] : null;
+  Artwork get focusedArtwork {
+    if (_shown == null) return null;
+
+    return focusedSection[_shown.index];
+  }
+
+  BuiltList<Artwork> get focusedSection {
+    if (_shown == null) return null;
+
+    return _artworksIn(_shown.section);
+  }
+
+  BuiltList<Artwork> _artworksIn(_GallerySection section) {
+    switch (section) {
+      case _GallerySection.artworks:
+        return artworks;
+      case _GallerySection.merch:
+        return merch;
+      default:
+        return null;
+    }
+  }
 
   /// Whether there is another artwork to the left of the currently focused one,
   /// assuming that [focusedArtwork] is non-null.
-  bool get hasPrevArtwork => _shownIndex > 0;
+  bool get hasPrevArtwork => _shown.index > 0;
 
   /// Whether there is another artwork to the right of the currently focused
   /// one, assuming that [focusedArtwork] is non-null.
-  bool get hasNextArtwork => _shownIndex < artworks.length - 1;
+  bool get hasNextArtwork => _shown.index < focusedSection.length - 1;
 
   bool _overlayOpen = false;
-  int _shownIndex;
 
-  GalleryModel._(this.artworks, this._gallery);
+  _GallerySelection _shown;
 
-  void focusArtworkAtIndex(int index) {
-    if (index < 0 || index >= artworks.length) {
-      _shownIndex = null;
+  GalleryModel._(this.artworks, this.merch, this._gallery) {
+    for (var i = 0; i < artworks.length; ++i) {
+      artworks[i]
+          .onFocus
+          .listen((_) => _focusSectionAtIndex(_GallerySection.artworks, i));
+    }
+
+    for (var i = 0; i < merch.length; ++i) {
+      merch[i]
+          .onFocus
+          .listen((_) => _focusSectionAtIndex(_GallerySection.merch, i));
+    }
+  }
+
+  void _focusSectionAtIndex(_GallerySection section, int index) {
+    if (index < 0 || index >= _artworksIn(section).length) {
+      _shown = null;
       return;
     }
 
-    _shownIndex = index;
+    _shown = _GallerySelection(section, index);
     _overlayOpen = true;
-    _gallery.showOverlay(artworks[_shownIndex]);
+    _gallery.showOverlay(focusedArtwork);
   }
 
   void dismissOverlay() {
-    final lastShownIndex = _shownIndex;
-    _shownIndex = null;
+    final lastShown = focusedArtwork;
+    _shown = null;
     _overlayOpen = false;
     _gallery.dismissOverlay();
-    _gallery.focusIndexInGallery(lastShownIndex);
+    _gallery.focusArtwork(lastShown);
   }
 
-  void focusGallery() {
-    _gallery.focusGallery();
+  void focusArtworks() {
+    _gallery.focusArtworks();
   }
 
   void focusNextArtwork() {
     if (!_overlayOpen) return;
-    if (_shownIndex < artworks.length - 1) {
-      _shownIndex++;
-      _gallery.showOverlay(artworks[_shownIndex]);
+    if (_shown.index < focusedSection.length - 1) {
+      _shown = _shown.next;
+      _gallery.showOverlay(focusedArtwork);
     }
   }
 
   void focusPrevArtwork() {
     if (!_overlayOpen) return;
-    if (_shownIndex > 0) {
-      _shownIndex--;
-      _gallery.showOverlay(artworks[_shownIndex]);
+    if (_shown.index > 0) {
+      _shown = _shown.prev;
+      _gallery.showOverlay(focusedArtwork);
     }
   }
+}
+
+class _GallerySelection {
+  final _GallerySection section;
+  final int index;
+
+  _GallerySelection get next => _GallerySelection(section, index + 1);
+  _GallerySelection get prev => _GallerySelection(section, index - 1);
+
+  _GallerySelection(this.section, this.index);
+}
+
+enum _GallerySection {
+  artworks,
+  merch,
 }

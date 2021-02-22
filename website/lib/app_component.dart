@@ -61,13 +61,18 @@ class AppComponent implements OnInit, OnDestroy {
   final GalleryModel galleryModel;
 
   @visibleForTemplate
+  BuiltList<Artwork> get artworks => _artworks;
+
+  @visibleForTemplate
+  BuiltList<Artwork> get merch => _merch;
+
+  @visibleForTemplate
   void doScroll() {
     _updateLogo();
   }
 
   @visibleForTemplate
   void scrollPastLandingArea() {
-    galleryModel.focusGallery();
     if (content.scrollTop < _galleryScrollPosition) {
       content.scrollTo(0, _galleryScrollPosition);
     }
@@ -85,7 +90,7 @@ class AppComponent implements OnInit, OnDestroy {
       // immediately visible.
       topBarVisible = false;
     } else {
-      // If disappearing, remove the scorll button but don't immediately show
+      // If disappearing, remove the scroll button but don't immediately show
       // the top bar.
       scrollButtonVisible = false;
     }
@@ -137,7 +142,7 @@ class AppComponent implements OnInit, OnDestroy {
 
   AppComponent(this._changeDetector, this._controller,
       GalleryModelFactory galleryModelFactory)
-      : galleryModel = galleryModelFactory.create(_artworks);
+      : galleryModel = galleryModelFactory.create(_artworks, _merch);
 
   int get _galleryScrollPosition =>
       reshmaName.offsetTop - (topBar?.scrollHeight ?? 0) - 16;
@@ -171,10 +176,6 @@ final _artworks = [
       thumbnailUrl: 'assets/stump_gallery.jpg',
       fullUrl: 'assets/stump.jpg'),
   Artwork(
-      name: 'Link Charm',
-      thumbnailUrl: 'assets/link_charm_gallery.jpg',
-      fullUrl: 'assets/link_charm.jpg'),
-  Artwork(
       name: 'Kirby Pancakes',
       thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg',
       fullUrl: 'assets/kirby_pancakes.jpg'),
@@ -190,8 +191,23 @@ final _artworks = [
       name: 'Chuck',
       thumbnailUrl: 'assets/chuck_gallery.jpg',
       fullUrl: 'assets/chuck.jpg'),
+].build();
+
+final _merch = [
+  Artwork(
+      name: 'Link Charm',
+      thumbnailUrl: 'assets/link_charm_gallery.jpg',
+      fullUrl: 'assets/link_charm.jpg'),
   Artwork(
       name: 'Wooden Charm',
       thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg',
       fullUrl: 'assets/milk_coffee_charm.jpg'),
+  Artwork(
+      name: 'Froggy Shirt',
+      thumbnailUrl: 'assets/froggy_shirt_gallery.jpg',
+      fullUrl: 'assets/froggy_shirt.jpg'),
+  Artwork(
+      name: 'Froggy Sweater',
+      thumbnailUrl: 'assets/froggy_sweater_gallery.jpg',
+      fullUrl: 'assets/froggy_sweater.jpg'),
 ].build();

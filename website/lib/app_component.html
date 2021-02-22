@@ -43,13 +43,20 @@
   <h2 class="section-name">artwork</h2>
   <rz-gallery #rzGallery
               (focusin)="scrollPastLandingArea()"
-              [galleryModel]="galleryModel"></rz-gallery>
+              [artworks]="artworks"
+              [isArtworkSection]="true"></rz-gallery>
 
   <rz-video>
     <source src="assets/design_reel.mp4"
             type="video/mp4">
       Sorry, your browser doesn't support embedded MP4 videos.
   </rz-video>
+
+  <h2 class="section-name">merch</h2>
+  <rz-gallery #rzGallery
+              (focusin)="scrollPastLandingArea()"
+              [artworks]="merch"
+              [isArtworkSection]="false"></rz-gallery>
 
   <rz-resume></rz-resume>
 </div>

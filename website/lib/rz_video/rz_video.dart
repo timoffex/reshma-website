@@ -28,7 +28,7 @@ class RzVideoComponent implements OnInit {
   }
 
   @visibleForTemplate
-  void pauseVideo(Event event) {
+  void pauseVideo() {
     // event.stopImmediatePropagation();
     _video.pause();
     videoPlaying = false;

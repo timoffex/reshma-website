@@ -20,15 +20,15 @@ class GalleryController {
   Stream<Artwork> get overlayOpened => _overlayOpened.stream;
   final _overlayOpened = StreamController<Artwork>.broadcast();
 
-  /// Stream that fires whenever browser focus should switch to the given index
-  /// in the gallery.
-  Stream<int> get galleryFocusIndexChange => _galleryFocusIndexChange.stream;
-  final _galleryFocusIndexChange = StreamController<int>.broadcast();
+  /// Stream that fires whenever browser focus should switch to the given
+  /// artwork.
+  Stream<Artwork> get galleryFocusChange => _galleryFocusChange.stream;
+  final _galleryFocusChange = StreamController<Artwork>.broadcast();
 
   /// Stream that fires when components should ensure browser focus is in the
-  /// gallery.
-  Stream get galleryFocused => _galleryFocused.stream;
-  final _galleryFocused = StreamController.broadcast();
+  /// artworks section of the gallery.
+  Stream get artworksFocused => _artworksFocused.stream;
+  final _artworksFocused = StreamController.broadcast();
 
   /// Commands the overlay to show a new artwork.
   ///
@@ -43,14 +43,13 @@ class GalleryController {
     _overlayDismissed.add(null);
   }
 
-  /// Ensures browser focus is in the gallery.
-  void focusGallery() {
-    _galleryFocused.add(null);
+  /// Ensures browser focus is in the artworks section of the gallery.
+  void focusArtworks() {
+    _artworksFocused.add(null);
   }
 
-  /// Commands the browser to set focus to the artwork at the given index in the
-  /// gallery.
-  void focusIndexInGallery(int index) {
-    _galleryFocusIndexChange.add(index);
+  /// Commands the browser to set focus to the specified artwork.
+  void focusArtwork(Artwork artwork) {
+    _galleryFocusChange.add(artwork);
   }
 }

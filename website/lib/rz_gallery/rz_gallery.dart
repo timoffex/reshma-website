@@ -8,7 +8,6 @@ import 'package:built_collection/built_collection.dart';
 
 import 'package:reshmawebsite/artwork.dart';
 import 'package:reshmawebsite/gallery_controller.dart';
-import 'package:reshmawebsite/gallery_model.dart';
 
 @Component(
     selector: 'rz-gallery',
@@ -18,14 +17,14 @@ import 'package:reshmawebsite/gallery_model.dart';
     changeDetection: ChangeDetectionStrategy.OnPush)
 class RzGalleryComponent implements OnInit, OnDestroy {
   @Input()
-  GalleryModel galleryModel;
+  BuiltList<Artwork> artworks;
+
+  @Input()
+  bool isArtworkSection = false;
 
   @visibleForTemplate
-  BuiltList<Artwork> get artworks => galleryModel.artworks;
-
-  @visibleForTemplate
-  void handleClickArtwork(int index) {
-    galleryModel.focusArtworkAtIndex(index);
+  void handleClickArtwork(Artwork artwork) {
+    artwork.focus();
   }
 
   @HostListener('focusin')
@@ -44,8 +43,9 @@ class RzGalleryComponent implements OnInit, OnDestroy {
   @override
   void ngOnInit() {
     _subscriptions = [
-      _controller.galleryFocusIndexChange.listen(_setFocus),
-      _controller.galleryFocused.listen((_) => _ensureFocus())
+      _controller.galleryFocusChange.listen(_setFocus),
+      if (isArtworkSection)
+        _controller.artworksFocused.listen((_) => _ensureFocus())
     ];
   }
 
@@ -56,8 +56,12 @@ class RzGalleryComponent implements OnInit, OnDestroy {
     }
   }
 
-  void _setFocus(int index) {
-    container.focus(index);
+  void _setFocus(Artwork artwork) {
+    final index = artworks.indexOf(artwork);
+
+    if (index >= 0) {
+      container.focus(index);
+    }
   }
 
   void _ensureFocus() {
