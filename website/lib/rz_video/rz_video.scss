@@ -31,10 +31,10 @@ video {
   left: 50%;
   transform: translate(-50%, -50%);
 
-  @include icon.material-icon-size(40px);
-
   @include common.with-current-theme using ($theme) {
     @include mb.button-background-color(
       'material-fab', map-get($theme, common.$primary-color));
   }
+
+  @include icon.material-icon-size(40px);
 }
