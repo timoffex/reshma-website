@@ -6,7 +6,9 @@
        [attr.tabindex]="videoPlaying ? 0 : -1">
   <ng-content></ng-content>
 </video>
-<div *ngIf="!videoPlaying" class="controls">
+<div *ngIf="!videoPlaying"
+     class="controls"
+     (click)="playVideo()">
   <div class="play-button">
     <material-fab #playButton
                   raised
