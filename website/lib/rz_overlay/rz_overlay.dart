@@ -7,6 +7,7 @@ import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_fab.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
 import 'package:reshmawebsite/artwork.dart';
+import 'package:reshmawebsite/slow_load_image/slow_load_image.dart';
 
 @Component(
   selector: 'rz-overlay',
@@ -18,6 +19,7 @@ import 'package:reshmawebsite/artwork.dart';
     MaterialFabComponent,
     MaterialIconComponent,
     NgIf,
+    SlowLoadImageComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )

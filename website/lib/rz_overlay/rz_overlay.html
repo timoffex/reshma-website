@@ -20,7 +20,8 @@
 </material-fab>
 
 <!-- The art -->
-<img [src]="artwork.fullUrl" [alt]="artwork.name">
+<slow-load-image [src]="artwork.fullUrl" [alt]="artwork.name">
+</slow-load-image>
 
 <!-- Navigate right -->
 <material-fab *ngIf="hasRight"

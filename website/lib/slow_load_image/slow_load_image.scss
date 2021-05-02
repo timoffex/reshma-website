@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+// TODO: Make the host element behave like an <img> in terms of sizing
+img {
+  max-width: 100%;
+  max-height: 100%;
+
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.darkened {
+  filter: brightness(50%);
+}
