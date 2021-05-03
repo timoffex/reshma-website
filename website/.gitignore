@@ -5,6 +5,12 @@
 # Conventional directory for build outputs
 build/
 
+# Where I store hi-res versions of all assets
+full_images/
+
+# Images; no need to save in repository
+web/assets/
+
 # Directory created by dartdoc
 doc/api/
 

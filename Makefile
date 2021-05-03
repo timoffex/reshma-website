@@ -1,6 +1,4 @@
-.PHONY: website
-website:
-	cd website && webdev build
+public: website
 	rm -rf public
 	mkdir public
 	cp -r website/build/assets/ public/assets/
@@ -9,6 +7,10 @@ website:
 	cp website/build/index.html public/
 	cp website/build/main.dart.js public/
 	cp website/build/styles.css public/
+
+.PHONY: website
+website:
+	$(MAKE) --directory=$@
 
 .PHONY: runlocally
 runlocally: website
