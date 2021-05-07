@@ -30,5 +30,27 @@ Anyway, it's all overkill for serving static files. I didn't see an
 nginx option for AppEngine, so I went with Ruby and copied the example
 files.
 
-I use a `Makefile` for local testing (`make runlocally`) and
-deployment (`make deploy`).
+---
+
+I use `make` for the build system. I don't use recursive `make`;
+instead I have a single top-level `Makefile` that includes modules
+from subdirectories, and I run all `make` commands from the project
+root. Mostly, I run `make runlocally` and `make deploy`. Two great
+resources helped me a lot with this:
+
+* This book chapter on using `make` for large projects:
+  https://www.oreilly.com/library/view/managing-projects-with/0596006101/ch06.html
+  
+  It starts off describing the "recursive make" strategy, but that has
+  some downsides that I don't like.
+  
+* This amazing blog series on metaprogramming `make`:
+  http://make.mad-scientist.net/category/metaprogramming/
+
+* The manual:
+  https://www.gnu.org/software/make/manual/html_node/index.html#SEC_Contents
+  
+I wanted to use Google's Bazel because I'm familiar with it, but the
+Dart support is lacking, and hermeticity made it difficult to use with
+the `webdev` command. I spent a lot of time trying. Eventually, I
+decided to learn `make` and figure out how to use it like `bazel`.
