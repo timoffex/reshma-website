@@ -424,7 +424,7 @@ packages:
   "rz.proto":
     dependency: "direct main"
     description:
-      path: "local_packages/proto"
+      path: "local_packages/rz.proto"
       relative: true
     source: path
     version: "0.0.0"

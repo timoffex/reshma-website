@@ -1,24 +1,21 @@
-_LOCAL_PROTOS := rz_schema.proto
+_DART_FILES := rz_schema.pb.dart     \
+	       rz_schema.pbenum.dart \
+	       rz_schema.pbjson.dart     \
+	       rz_schema.pbserver.dart
+_DART_LIB_OUTS := $(addprefix $(subdir_out)/lib/, $(_DART_FILES))
 
 
-# Produces .dart filenames from the .proto file
-#
-# You can figure these out by running the protoc command manually and
-# examining the output
-_dart_outs = \
-  $(foreach S,pb pbenum pbjson pbserver,$(basename $1).$S.dart)
 
 
-# Produces a rule to build Dart targets from a proto file, and also
-# adds those files as prerequisites for the pubspec.yaml file
-define _make_dart_rule
-$(call _dart_outs,$(subdir_out)/lib/$1) &: $(subdir_src)/$1
-	mkdir -p $$(dir $$@)
-	protoc --dart_out=$(OUTPUT_DIR) $$<
-	mkdir -p $(subdir_out)/lib
-	mv $(call _dart_outs,$(subdir_out)/$1) $(subdir_out)/lib/
-$(subdir_out)/pubspec.yaml: $(call _dart_outs,$(subdir_out)/lib/$1)
-endef
+
+# The directory that contains the Dart files for the rz.proto package.
+DART_PKG_DIR/rz.proto := $(subdir_out)
+
+# The prerequisites to use to depend on this Dart package
+DART_PKG/rz.proto := $(subdir_out)/pubspec.yaml $(_DART_LIB_OUTS);
+
+
+
 
 
 # pubspec.yaml file for all of the Dart targets
@@ -26,5 +23,16 @@ $(subdir_out)/pubspec.yaml: $(subdir_src)/pubspec.yaml
 	mkdir -p $(dir $@)
 	cp $< $@
 
-# Make Dart targets for every proto
-$(foreach F,$(_LOCAL_PROTOS),$(eval $(call _make_dart_rule,$F)))
+
+# Warn about missing grouped-target feature (the '&:' symbol)
+$(if $(findstring grouped-target,$(.FEATURES)),,\
+    $(info 'grouped-target' feature not present, \
+           protos may get rebuilt multiple times))
+
+
+# Compile proto to Dart
+$(_DART_LIB_OUTS) &: $(subdir_src)/rz_schema.proto
+	mkdir -p /tmp/proto_output/
+	cd $(dir $<) && protoc --dart_out=/tmp/proto_output/ $(notdir $<)
+	mkdir -p $(DART_PKG_DIR/rz.proto)/lib
+	cp $(addprefix /tmp/proto_output/,$(_DART_FILES)) $(DART_PKG_DIR/rz.proto)/lib
