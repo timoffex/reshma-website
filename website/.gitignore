@@ -5,6 +5,9 @@
 # Conventional directory for build outputs
 build/
 
+# A generated folder containing Dart packages defined elsewhere in the project
+local_packages/
+
 # Where I store hi-res versions of all assets
 full_images/
 

@@ -4,6 +4,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:rz.proto/rz_schema.pb.dart' as pb;
 
 import 'artwork.dart';
 import 'gallery_controller.dart';
@@ -44,10 +45,10 @@ class AppComponent implements OnInit, OnDestroy {
   final GalleryModel galleryModel;
 
   @visibleForTemplate
-  BuiltList<Artwork> get artworks => _artworks;
+  final artworks = _artworks;
 
   @visibleForTemplate
-  BuiltList<Artwork> get merch => _merch;
+  final merch = _merch;
 
   @visibleForTemplate
   void handleDismissOverlay() {
@@ -85,52 +86,67 @@ class AppComponent implements OnInit, OnDestroy {
   final GalleryController _controller;
 }
 
-final _artworks = [
-  GalleryArtwork(
-      name: 'Potions',
-      thumbnailUrl: 'assets/potion_gallery.jpg',
-      fullUrl: 'assets/potion.jpg'),
-  GalleryArtwork(
-      name: 'Mushroom',
-      thumbnailUrl: 'assets/mushroom_gallery.jpg',
-      fullUrl: 'assets/mushroom.jpg'),
-  GalleryArtwork(
-      name: 'Stump',
-      thumbnailUrl: 'assets/stump_gallery.jpg',
-      fullUrl: 'assets/stump.jpg'),
-  GalleryArtwork(
-      name: 'Kirby Pancakes',
-      thumbnailUrl: 'assets/kirby_pancakes_gallery.jpg',
-      fullUrl: 'assets/kirby_pancakes.jpg'),
-  GalleryArtwork(
-      name: 'Pika Fruit',
-      thumbnailUrl: 'assets/pika_fruit_gallery.jpg',
-      fullUrl: 'assets/pika_fruit.jpg'),
-  GalleryArtwork(
-      name: 'Girl',
-      thumbnailUrl: 'assets/tennis_player_gallery.jpg',
-      fullUrl: 'assets/tennis_player.jpg'),
-  GalleryArtwork(
-      name: 'Chuck',
-      thumbnailUrl: 'assets/chuck_gallery.jpg',
-      fullUrl: 'assets/chuck.jpg'),
-].build();
+final _schema = pb.RzWebsiteSchema()
+  ..galleryArtworks.addAll([
+    pb.GalleryArtwork()
+      ..name = 'Potions'
+      ..thumbnailUri = 'assets/potion_gallery.jpg'
+      ..previewUri = 'assets/potion.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Mushroom'
+      ..thumbnailUri = 'assets/mushroom_gallery.jpg'
+      ..previewUri = 'assets/mushroom.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Stump'
+      ..thumbnailUri = 'assets/stump_gallery.jpg'
+      ..previewUri = 'assets/stump.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Kirby Pancakes'
+      ..thumbnailUri = 'assets/kirby_pancakes_gallery.jpg'
+      ..previewUri = 'assets/kirby_pancakes.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Pika Fruit'
+      ..thumbnailUri = 'assets/pika_fruit_gallery.jpg'
+      ..previewUri = 'assets/pika_fruit.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Girl'
+      ..thumbnailUri = 'assets/tennis_player_gallery.jpg'
+      ..previewUri = 'assets/tennis_player.jpg',
+    pb.GalleryArtwork()
+      ..name = 'Chuck'
+      ..thumbnailUri = 'assets/chuck_gallery.jpg'
+      ..previewUri = 'assets/chuck.jpg',
+  ])
+  ..merch.addAll([
+    pb.Merch()
+      ..name = 'Link Charm'
+      ..thumbnailUri = 'assets/link_charm_gallery.jpg'
+      ..previewUri = 'assets/link_charm.jpg',
+    pb.Merch()
+      ..name = 'Wooden Charm'
+      ..thumbnailUri = 'assets/milk_coffee_charm_gallery.jpg'
+      ..previewUri = 'assets/milk_coffee_charm.jpg',
+    pb.Merch()
+      ..name = 'Froggy Shirt'
+      ..thumbnailUri = 'assets/froggy_shirt_gallery.jpg'
+      ..previewUri = 'assets/froggy_shirt.jpg',
+    pb.Merch()
+      ..name = 'Froggy Sweater'
+      ..thumbnailUri = 'assets/froggy_sweater_gallery.jpg'
+      ..previewUri = 'assets/froggy_sweater.jpg',
+  ])
+  ..freeze();
 
-final _merch = [
-  GalleryArtwork(
-      name: 'Link Charm',
-      thumbnailUrl: 'assets/link_charm_gallery.jpg',
-      fullUrl: 'assets/link_charm.jpg'),
-  GalleryArtwork(
-      name: 'Wooden Charm',
-      thumbnailUrl: 'assets/milk_coffee_charm_gallery.jpg',
-      fullUrl: 'assets/milk_coffee_charm.jpg'),
-  GalleryArtwork(
-      name: 'Froggy Shirt',
-      thumbnailUrl: 'assets/froggy_shirt_gallery.jpg',
-      fullUrl: 'assets/froggy_shirt.jpg'),
-  GalleryArtwork(
-      name: 'Froggy Sweater',
-      thumbnailUrl: 'assets/froggy_sweater_gallery.jpg',
-      fullUrl: 'assets/froggy_sweater.jpg'),
-].build();
+final _artworks = _schema.galleryArtworks
+    .map((artwork) => GalleryArtwork(
+        name: artwork.name,
+        thumbnailUrl: artwork.thumbnailUri,
+        fullUrl: artwork.previewUri))
+    .toBuiltList();
+
+final _merch = _schema.merch
+    .map((artwork) => GalleryArtwork(
+        name: artwork.name,
+        thumbnailUrl: artwork.thumbnailUri,
+        fullUrl: artwork.previewUri))
+    .toBuiltList();

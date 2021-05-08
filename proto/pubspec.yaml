@@ -1,0 +1,7 @@
+name: rz.proto
+
+environment:
+  sdk: '>=2.10.0-0 <3.0.0'
+
+dependencies:
+  protobuf:

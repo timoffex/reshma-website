@@ -86,6 +86,7 @@ endef
 
 
 include appengine/module.mk
+include proto/module.mk
 include website/module.mk
 
 

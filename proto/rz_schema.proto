@@ -1,0 +1,22 @@
+syntax = "proto3";
+package rz;
+
+
+message RzWebsiteSchema {
+  repeated GalleryArtwork gallery_artworks = 1;
+  repeated Merch merch = 2;
+}
+
+
+message GalleryArtwork {
+  string name = 1;
+  string thumbnail_uri = 2;
+  string preview_uri = 3;
+}
+
+
+message Merch {
+  string name = 1;
+  string thumbnail_uri = 2;
+  string preview_uri = 3;
+}

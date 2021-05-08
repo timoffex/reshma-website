@@ -9,6 +9,8 @@ dependencies:
   bootstrap_sass: any
   built_collection: any
   stream_transform: ^1.2.0
+  rz.proto:
+    path: local_packages/proto
 
 dev_dependencies:
   build_runner: ^1.10.0
