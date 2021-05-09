@@ -1,3 +1,8 @@
+$(eval $(call assert_defined, \
+    DART_PKG_DIR/rz.proto \
+    DART_PKG/rz.proto \
+))
+
 _IMPORTED_PACKAGES := rz.proto
 
 

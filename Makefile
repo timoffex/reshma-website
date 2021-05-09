@@ -79,15 +79,38 @@ $(addprefix $(subdir_out)/,$1): $(subdir_out)/%: $(subdir_src)/%
 endef
 
 
+# Asserts that a list of variables is defined.
+#
+# Usage: $(eval $(call assert_defined,VAR1 VAR2))
+#
+# This should be used to enforce that a module's dependencies were
+# included before it.
+define assert_defined
+
+define _impl
+ifndef $$1
+$$$$(error $$1 has not yet been defined)
+endif
+endef
+
+$$(foreach V,$1,$$(eval $$(call _impl,$$V)))
+endef
+
 
 ################################################################################
 # SUBMODULES                                                                   #
 ################################################################################
 
 
-include appengine/module.mk
+#################### NOTE:   ORDER  IS  IMPORTANT ##############################
+#
+# Order is important because modules can define variables (in certain
+# predefined formats) that can be referenced by other modules. For
+# example, proto/module.mk defines DART_PKG/rz.proto and
+# DART_PKG_DIR/rz.proto variables which are used by website/module.mk.
 include proto/module.mk
 include website/module.mk
+include appengine/module.mk
 
 
 
