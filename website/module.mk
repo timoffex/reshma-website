@@ -46,6 +46,7 @@ $(subdir_src)/build: $(_MAKE_ACTIONS)/pub_get \
 # Copy the build directory to the output files so that it can be used
 # by other rules
 $(subdir_out)/build: $(subdir_src)/build
+	rm -rf $(dir $@)
 	mkdir -p $(dir $@)
 	cp -a $< $(dir $@)
 

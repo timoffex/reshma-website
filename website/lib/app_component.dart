@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:rz.proto/rz_schema.pb.dart' as pb;
 
 import 'artwork.dart';
@@ -42,13 +44,13 @@ class AppComponent implements OnInit, OnDestroy {
   Artwork overlayArtwork;
 
   @visibleForTemplate
-  final GalleryModel galleryModel;
+  GalleryModel galleryModel;
 
   @visibleForTemplate
-  final artworks = _artworks;
+  BuiltList<GalleryArtwork> artworks;
 
   @visibleForTemplate
-  final merch = _merch;
+  BuiltList<GalleryArtwork> merch;
 
   @visibleForTemplate
   void handleDismissOverlay() {
@@ -61,6 +63,8 @@ class AppComponent implements OnInit, OnDestroy {
       _controller.overlayDismissed.listen((_) => _dismissOverlay()),
       _controller.overlayOpened.listen(_showOverlay),
     ];
+
+    unawaited(_fetchSchema());
   }
 
   @override
@@ -68,6 +72,28 @@ class AppComponent implements OnInit, OnDestroy {
     for (final subscription in _subscriptions) {
       subscription.cancel();
     }
+  }
+
+  Future<void> _fetchSchema() async {
+    final schema =
+        pb.RzWebsiteSchema.fromJson(await HttpRequest.getString('/schema'));
+
+    artworks = schema.galleryArtworks
+        .map((artwork) => GalleryArtwork(
+            name: artwork.name,
+            thumbnailUrl: artwork.thumbnailUri,
+            fullUrl: artwork.previewUri))
+        .toBuiltList();
+
+    merch = schema.merch
+        .map((artwork) => GalleryArtwork(
+            name: artwork.name,
+            thumbnailUrl: artwork.thumbnailUri,
+            fullUrl: artwork.previewUri))
+        .toBuiltList();
+
+    galleryModel = _galleryModelFactory.create(artworks, merch);
+    _changeDetector.markForCheck();
   }
 
   void _dismissOverlay() {
@@ -78,75 +104,12 @@ class AppComponent implements OnInit, OnDestroy {
     overlayArtwork = artwork;
   }
 
-  AppComponent(this._controller, GalleryModelFactory galleryModelFactory)
-      : galleryModel = galleryModelFactory.create(_artworks, _merch);
+  AppComponent(
+      this._controller, this._galleryModelFactory, this._changeDetector);
 
   List<StreamSubscription> _subscriptions;
 
   final GalleryController _controller;
+  final GalleryModelFactory _galleryModelFactory;
+  final ChangeDetectorRef _changeDetector;
 }
-
-final _schema = pb.RzWebsiteSchema()
-  ..galleryArtworks.addAll([
-    pb.GalleryArtwork()
-      ..name = 'Potions'
-      ..thumbnailUri = 'assets/potion_gallery.jpg'
-      ..previewUri = 'assets/potion.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Mushroom'
-      ..thumbnailUri = 'assets/mushroom_gallery.jpg'
-      ..previewUri = 'assets/mushroom.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Stump'
-      ..thumbnailUri = 'assets/stump_gallery.jpg'
-      ..previewUri = 'assets/stump.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Kirby Pancakes'
-      ..thumbnailUri = 'assets/kirby_pancakes_gallery.jpg'
-      ..previewUri = 'assets/kirby_pancakes.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Pika Fruit'
-      ..thumbnailUri = 'assets/pika_fruit_gallery.jpg'
-      ..previewUri = 'assets/pika_fruit.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Girl'
-      ..thumbnailUri = 'assets/tennis_player_gallery.jpg'
-      ..previewUri = 'assets/tennis_player.jpg',
-    pb.GalleryArtwork()
-      ..name = 'Chuck'
-      ..thumbnailUri = 'assets/chuck_gallery.jpg'
-      ..previewUri = 'assets/chuck.jpg',
-  ])
-  ..merch.addAll([
-    pb.Merch()
-      ..name = 'Link Charm'
-      ..thumbnailUri = 'assets/link_charm_gallery.jpg'
-      ..previewUri = 'assets/link_charm.jpg',
-    pb.Merch()
-      ..name = 'Wooden Charm'
-      ..thumbnailUri = 'assets/milk_coffee_charm_gallery.jpg'
-      ..previewUri = 'assets/milk_coffee_charm.jpg',
-    pb.Merch()
-      ..name = 'Froggy Shirt'
-      ..thumbnailUri = 'assets/froggy_shirt_gallery.jpg'
-      ..previewUri = 'assets/froggy_shirt.jpg',
-    pb.Merch()
-      ..name = 'Froggy Sweater'
-      ..thumbnailUri = 'assets/froggy_sweater_gallery.jpg'
-      ..previewUri = 'assets/froggy_sweater.jpg',
-  ])
-  ..freeze();
-
-final _artworks = _schema.galleryArtworks
-    .map((artwork) => GalleryArtwork(
-        name: artwork.name,
-        thumbnailUrl: artwork.thumbnailUri,
-        fullUrl: artwork.previewUri))
-    .toBuiltList();
-
-final _merch = _schema.merch
-    .map((artwork) => GalleryArtwork(
-        name: artwork.name,
-        thumbnailUrl: artwork.thumbnailUri,
-        fullUrl: artwork.previewUri))
-    .toBuiltList();
