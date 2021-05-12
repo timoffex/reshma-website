@@ -79,5 +79,5 @@ define import_dart_pkg
 $(call action,local_packages_$1): $(DART_PKG/$1)
 	mkdir -p $(subdir_src)/local_packages/$1
 	cp -a $(DART_PKG_DIR/$1)/* $(subdir_src)/local_packages/$1
-	$(touch_action)
+	$$(touch_action)
 endef
