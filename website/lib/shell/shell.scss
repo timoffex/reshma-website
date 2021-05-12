@@ -1,0 +1,72 @@
+@use 'package:angular_components/css/material/material' as material;
+@use 'package:reshmawebsite/css/common' as common;
+
+:host {
+  ::ng-deep {
+    @include common.theme("color", common.$primary-text-color);
+  }
+}
+
+.reshma-name {
+  margin-left: 2 * material.$mat-grid;
+  text-align: center;
+  line-height: 60px;
+  height: 60px;
+  
+  @include common.theme("color", common.$primary-text-color);
+}
+
+.content {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  @include common.theme("background-color", common.$primary-color);
+}
+
+rz-overlay {
+  z-index: 3;
+}
+
+rz-video {
+  margin: 20 * material.$mat-grid auto;
+}
+
+rz-resume {
+  display: block;
+  margin-top: 20 * material.$mat-grid;
+  margin-bottom: 20 * material.$mat-grid;
+}
+
+.reshma-title {
+  font-family: 'Rozha One';
+  font-size: 10vw;
+  line-height: 0.7;
+  
+  margin-bottom: 0;
+}
+
+.reshma-subtitle {
+  font-family: 'Rozha One';
+  font-size: 5vw;
+  font-weight: lighter;
+  line-height: 1;
+  
+  @include common.theme('color', common.$secondary-text-color);
+
+  margin-top: 0;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.section-name {
+  font-family: 'Rozha One';
+  font-size: 10vw;
+  text-align: end;
+
+  margin-bottom: 0;
+
+  position: relative;
+  right: 10vw;
+  line-height: 1;
+}
