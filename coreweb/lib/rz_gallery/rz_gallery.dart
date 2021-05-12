@@ -6,8 +6,8 @@ import 'package:angular_components/focus/focus_item.dart';
 import 'package:angular_components/focus/focus_list.dart';
 import 'package:built_collection/built_collection.dart';
 
-import 'package:reshmawebsite/artwork.dart';
-import 'package:reshmawebsite/gallery_controller.dart';
+import 'package:rz.coreweb/artwork.dart';
+import 'package:rz.coreweb/gallery_controller.dart';
 
 @Component(
     selector: 'rz-gallery',

@@ -68,15 +68,41 @@ subdir_src = $(subdirectory)
 subdir_out = $(OUTPUT_DIR)/$(subdirectory)
 
 
+# A macro that evaluates to a submodule's ".makeactions" directory.
+#
+# This is the directory where fake files representing makefile targets
+# should go.
+make_actions_dir = $(subdir_src)/.makeactions
+
+
+# A function that evaluates to the location of a make action named by
+# $1 in the .makeactions directory.
+#
+# Example usage: $(call action,pub_get)
+#
+# This is equivalent to $(make_actions_dir)/$1.
+action = $(make_actions_dir)/$1
+
+
+# A macro intended to be used at the end of a recipe whose target is
+# an action, which creates the file corresponding to the action.
+#
+# Usage:
+#
+# 	$(call action,my_action): some prereqs
+# 		action implementation
+#		$(touch_action)
+touch_action = mkdir -p $(dir $@) && touch $@
+
+
 # A function that copies the specified files from the SOURCE directory
 # to the OUTPUT directory.
 #
-# Usage: $(eval (call exportsrc,file1 file2 file3 ...))
-define exportsrc
+# Usage: $(eval $(call exportsrc,file1 file2 file3 ...))
+
 $(addprefix $(subdir_out)/,$1): $(subdir_out)/%: $(subdir_src)/%
 	mkdir -p $$(dir $$@)
 	cp $$< $$@
-endef
 
 
 # Asserts that a list of variables is defined.
@@ -97,6 +123,9 @@ $$(foreach V,$1,$$(eval $$(call _impl,$$V)))
 endef
 
 
+include $(wildcard make/*.mk)
+
+
 ################################################################################
 # SUBMODULES                                                                   #
 ################################################################################
@@ -109,6 +138,7 @@ endef
 # example, proto/module.mk defines DART_PKG/rz.proto and
 # DART_PKG_DIR/rz.proto variables which are used by website/module.mk.
 include proto/module.mk
+include coreweb/module.mk
 include website/module.mk
 include appengine/module.mk
 

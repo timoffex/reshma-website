@@ -6,8 +6,8 @@ import 'package:angular_components/auto_dismiss/auto_dismiss.dart';
 import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_fab.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
-import 'package:reshmawebsite/artwork.dart';
-import 'package:reshmawebsite/slow_load_image/slow_load_image.dart';
+import 'package:rz.coreweb/artwork.dart';
+import 'package:rz.coreweb/slow_load_image/slow_load_image.dart';
 
 @Component(
   selector: 'rz-overlay',

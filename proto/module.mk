@@ -5,23 +5,8 @@ _DART_FILES := rz_schema.pb.dart     \
 _DART_LIB_OUTS := $(addprefix $(subdir_out)/lib/, $(_DART_FILES))
 
 
-
-
-
-# The directory that contains the Dart files for the rz.proto package.
-DART_PKG_DIR/rz.proto := $(subdir_out)
-
-# The prerequisites to use to depend on this Dart package
-DART_PKG/rz.proto := $(subdir_out)/pubspec.yaml $(_DART_LIB_OUTS);
-
-
-
-
-
-# pubspec.yaml file for all of the Dart targets
-$(subdir_out)/pubspec.yaml: $(subdir_src)/pubspec.yaml
-	mkdir -p $(dir $@)
-	cp $< $@
+# Define the Dart package
+$(eval $(call dart_pkg,rz.proto,$(_DART_LIB_OUTS)))
 
 
 # Warn about missing grouped-target feature (the '&:' symbol)

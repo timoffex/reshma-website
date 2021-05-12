@@ -4,13 +4,13 @@ import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
-import 'package:reshmawebsite/artwork.dart';
-import 'package:reshmawebsite/gallery_controller.dart';
-import 'package:reshmawebsite/gallery_model.dart';
-import 'package:reshmawebsite/rz_gallery/rz_gallery.dart';
-import 'package:reshmawebsite/rz_overlay/rz_overlay.dart';
-import 'package:reshmawebsite/rz_resume/rz_resume.dart';
-import 'package:reshmawebsite/rz_video/rz_video.dart';
+import 'package:rz.coreweb/artwork.dart';
+import 'package:rz.coreweb/gallery_controller.dart';
+import 'package:rz.coreweb/gallery_model.dart';
+import 'package:rz.coreweb/rz_gallery/rz_gallery.dart';
+import 'package:rz.coreweb/rz_overlay/rz_overlay.dart';
+import 'package:rz.coreweb/rz_resume/rz_resume.dart';
+import 'package:rz.coreweb/rz_video/rz_video.dart';
 
 /// The root component for the website.
 ///
