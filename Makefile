@@ -131,6 +131,21 @@ include $(wildcard make/*.mk)
 # SUBMODULES                                                                   #
 ################################################################################
 
+.PHONY: all
+all: ;
+
+# Target for cleaning generated files in the source tree (not in
+# output directories).
+#
+# Submodules can generate files in $(subdir_src) to assist IDEs. This
+# target cleans up those files. Submodules should register generated
+# files and directories in $(GENERATED_SRC_FILES).
+.PHONY: cleansrc
+cleansrc:
+	rm -rf $(GENERATED_SRC_FILES)
+
+GENERATED_SRC_FILES :=
+
 
 #################### NOTE:   ORDER  IS  IMPORTANT ##############################
 #

@@ -19,3 +19,11 @@ $(call action,pub_get): $(subdir_src)/pubspec.yaml
 # A phony target to set up this directory for local development
 .PHONY: DEV/$(subdir_src)
 DEV/$(subdir_src): $(call action,pub_get)
+
+
+GENERATED_SRC_FILES += $(addprefix $(subdir_src)/,\
+  .makeactions \
+  local_packages \
+  .packages \
+  .dart_tool \
+)

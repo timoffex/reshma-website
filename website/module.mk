@@ -1,6 +1,9 @@
+
 $(eval $(call assert_defined, \
     DART_PKG_DIR/rz.proto \
     DART_PKG/rz.proto \
+    DART_PKG_DIR/rz.coreweb \
+    DART_PKG/rz.coreweb \
 ))
 
 _IMPORTED_PACKAGES := rz.proto rz.coreweb
@@ -45,3 +48,17 @@ $(subdir_out)/build: $(subdir_src)/build
 $(subdir_src)/serve: $(make_actions_dir)/pub_get
 	cd $(dir $@) && \
 	  webdev serve --output web:build
+
+
+# A phony target to set up this directory for local development
+.PHONY: DEV/$(subdir_src)
+DEV/$(subdir_src): $(call action,pub_get)
+
+
+GENERATED_SRC_FILES += $(addprefix $(subdir_src)/,\
+  build \
+  .makeactions \
+  local_packages \
+  .packages \
+  .dart_tool \
+)
