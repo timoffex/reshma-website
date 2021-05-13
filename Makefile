@@ -99,10 +99,11 @@ touch_action = mkdir -p $(dir $@) && touch $@
 # to the OUTPUT directory.
 #
 # Usage: $(eval $(call exportsrc,file1 file2 file3 ...))
-
+define exportsrc
 $(addprefix $(subdir_out)/,$1): $(subdir_out)/%: $(subdir_src)/%
 	mkdir -p $$(dir $$@)
 	cp $$< $$@
+endef
 
 
 # Asserts that a list of variables is defined.
