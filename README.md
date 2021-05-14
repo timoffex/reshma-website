@@ -35,8 +35,9 @@ files.
 I use `make` for the build system. I don't use recursive `make`;
 instead I have a single top-level `Makefile` that includes modules
 from subdirectories, and I run all `make` commands from the project
-root. Mostly, I run `make runlocally` and `make deploy`. Two great
-resources helped me a lot with this:
+root. Mostly, I run `gmake appengine/<service>/runlocally` and `gmake
+appengine/<service>/deploy`. Two great resources helped me a lot with
+this:
 
 * This book chapter on using `make` for large projects:
   https://www.oreilly.com/library/view/managing-projects-with/0596006101/ch06.html

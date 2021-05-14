@@ -155,25 +155,6 @@ GENERATED_SRC_FILES :=
 # DART_PKG_DIR/rz.proto variables which are used by website/module.mk.
 include proto/module.mk
 include coreweb/module.mk
+include editor/module.mk
 include website/module.mk
 include appengine/module.mk
-
-
-
-################################################################################
-# PHONY TARGETS                                                                #
-################################################################################
-
-
-
-.PHONY: runlocally
-runlocally: $(OUTPUT_DIR)/appengine/public
-	cd $(OUTPUT_DIR)/appengine && \
-	  bundle exec ruby app.rb -p 8080
-
-# https://cloud.google.com/appengine/docs/standard/ruby/testing-and-deploying-your-app#testing-on-app-engine
-.PHONY: deploy
-deploy: $(OUTPUT_DIR)/appengine/public
-	cd $(OUTPUT_DIR)/appengine && \
-	  gcloud app deploy --no-promote
-	@echo "New version is not yet receiving traffic. Go to https://console.cloud.google.com/appengine/versions. See help for 'gcloud app versions'"
