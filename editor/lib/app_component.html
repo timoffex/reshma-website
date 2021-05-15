@@ -1,1 +1,5 @@
-Hello world!
+<rz-shell *ngIf="galleryModel != null"
+          [galleryModel]="galleryModel">
+  <rz-gallery artwork [artworks]="artworks"></rz-gallery>
+  <rz-gallery merch [artworks]="merch"></rz-gallery>
+</rz-shell>

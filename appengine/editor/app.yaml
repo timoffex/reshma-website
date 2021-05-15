@@ -13,3 +13,6 @@ handlers:
 - url: /fonts
   static_dir: public/fonts
   expiration: 7d  # Unlikely to update fonts without renaming
+- url: /assets
+  static_dir: public/assets
+  expiration: 1h  # Could update images without renaming

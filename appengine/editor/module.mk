@@ -16,6 +16,7 @@ $(subdir_src)/Gemfile.lock: $(subdir_src)/Gemfile
 $(subdir_out)/public: $(OUTPUT_DIR)/editor/build $(_OUT_FILES)
 	rm -rf $@
 	mkdir -p $@
+	cp -r $</assets/ $@/assets/
 	cp -r $</fonts/ $@/fonts/
 	cp $</favicon.ico $@
 	cp $</index.html $@
