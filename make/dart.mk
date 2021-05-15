@@ -3,9 +3,16 @@
 #
 # The following macros are provided:
 #
+#   list_dart_src_files
 #   dart_pkg
 #   import_dart_pkg
 
+
+
+# A macro that expands to all relevant lib/ and web/ files in $(subdir_src).
+list_dart_src_files = $(addprefix $(subdir_src)/,\
+  $(shell cd $(subdir_src) && find lib -type f | grep -E '.(dart|html|scss)$$')\
+  $(shell cd $(subdir_src) && find web -type f | grep -v '~$$'))
 
 
 

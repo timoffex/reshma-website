@@ -29,9 +29,7 @@ $(call action,pub_get): $(subdir_src)/pubspec.yaml		\
 
 
 # Run "webdev build" to build the package
-$(subdir_src)/build: $(make_actions_dir)/pub_get \
-                     $(subdir_src)/lib \
-                     $(subdir_src)/web
+$(subdir_src)/build: $(make_actions_dir)/pub_get $(list_dart_src_files)
 	cd $(dir $@) && \
 	  webdev build --output web:build
 
