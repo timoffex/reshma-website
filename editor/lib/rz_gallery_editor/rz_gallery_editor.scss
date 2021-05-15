@@ -1,0 +1,30 @@
+@use 'package:rz.coreweb/css/common' as common;
+@import 'package:angular_components/css/material/material';
+
+:host {
+  display: block;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.artwork {
+  width: 40 * $mat-grid;
+  height: 40 * $mat-grid;
+  margin: 0;
+  padding: 0;
+
+  @include common.with-current-theme() using ($theme) {
+    border-color: map-get($theme, common.$primary-text-color);
+    border-width: 1px;
+    border-style: dotted;
+  }
+    
+  &:hover {
+    border-style: solid;
+  }
+}

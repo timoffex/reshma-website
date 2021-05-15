@@ -1,0 +1,9 @@
+<div class="container">
+  <img *ngFor="let artwork of artworks; let i=index"
+       class="artwork"
+       [src]="artwork.thumbnailUrl"
+       draggable="true"
+       (dragstart)="startDrag(i, $event)"
+       (dragover)="onDragOver(i, $event)"
+       (drop)="onDrop(i, $event)">
+</div>

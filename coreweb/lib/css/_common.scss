@@ -32,6 +32,12 @@ $themes: (
   }
 }
 
+// Usage:
+//
+//   @include common.with-current-theme() using ($theme) {
+//     // Use $theme as a map
+//     // map-get($theme, common.$primary-color)
+//   }
 @mixin with-current-theme() {
   @media (prefers-color-scheme: dark) {
     @content(map-get($themes, $dark-theme));

@@ -8,8 +8,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:rz.coreweb/gallery_controller.dart';
 import 'package:rz.coreweb/gallery_model.dart';
-import 'package:rz.coreweb/rz_gallery/rz_gallery.dart';
 import 'package:rz.coreweb/shell/shell.dart';
+import 'package:rz.editor/rz_gallery_editor/rz_gallery_editor.dart';
 import 'package:rz.proto/rz_schema.pb.dart' as pb;
 
 @Component(
@@ -17,7 +17,7 @@ import 'package:rz.proto/rz_schema.pb.dart' as pb;
     templateUrl: 'app_component.html',
     directives: [
       NgIf,
-      RzGalleryComponent,
+      RzGalleryEditorComponent,
       ShellComponent,
     ],
     providers: [
