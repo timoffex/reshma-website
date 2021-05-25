@@ -9,10 +9,10 @@ GitHub.
 
 The server looks like it's in Ruby, but don't be fooled---it just
 serves static files and that's mostly handled by Google's AppEngine
-(see `app.yaml`). I picked Ruby because it has "Flexible Environment"
+(see `app.yaml`). I picked Ruby because it has "Standard Environment"
 support in AppEngine; I originally tried Haskell but
 
-* I would have only been able to use the "Standard Environment" in
+* I would have only been able to use the "Flexible Environment" in
   Google's AppEngine, which has no free quota
 * it was way harder to set up:
   * the `fpco/stack-build` Docker image is huge
