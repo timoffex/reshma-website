@@ -94,3 +94,11 @@ I wanted to use Google's Bazel because I'm familiar with it, but the
 Dart support is lacking, and hermeticity made it difficult to use with
 the `webdev` command. I spent a lot of time trying. Eventually, I
 decided to learn `make` and figure out how to use it like `bazel`.
+
+# Local development
+
+- Use `gcloud auth application-default login` before running local
+  server
+- `gmake appengine/default/runlocally` to start local server
+- `gmake out/appengine/default/public` to rebuild Dart part of the
+  application
