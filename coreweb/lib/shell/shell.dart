@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular/meta.dart';
-import 'package:angular_components/angular_components.dart';
-import 'package:rz.coreweb/artwork.dart';
-import 'package:rz.coreweb/gallery_controller.dart';
-import 'package:rz.coreweb/gallery_model.dart';
+import 'package:angular_components/angular_components.dart' hide overlayModule;
+import 'package:angular_components/utils/disposer/disposer.dart';
+import 'package:rz.coreweb/overlay_model.dart';
 import 'package:rz.coreweb/rz_gallery/rz_gallery.dart';
 import 'package:rz.coreweb/rz_overlay/rz_overlay.dart';
 import 'package:rz.coreweb/rz_resume/rz_resume.dart';
@@ -30,48 +27,23 @@ import 'package:rz.coreweb/rz_video/rz_video.dart';
       RzResumeComponent,
       RzVideoComponent,
     ],
+    providers: [overlayModule],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class ShellComponent implements OnInit, OnDestroy {
-  @Input()
-  GalleryModel galleryModel;
-
+class ShellComponent implements OnDestroy {
   @visibleForTemplate
-  bool get overlayVisible => overlayArtwork != null;
+  bool get overlayVisible => _overlayModel.overlayShown;
 
-  @visibleForTemplate
-  Artwork overlayArtwork;
-
-  @visibleForTemplate
-  void handleDismissOverlay() {
-    galleryModel.dismissOverlay();
-  }
-
-  @override
-  void ngOnInit() {
-    _subscriptions = [
-      _controller.overlayDismissed.listen((_) => _dismissOverlay()),
-      _controller.overlayOpened.listen(_showOverlay),
-    ];
+  ShellComponent(this._changeDetector, this._overlayModel) {
+    _disposer.addStreamSubscription(
+        _overlayModel.changes.listen((_) => _changeDetector.markForCheck()));
   }
 
   @override
   void ngOnDestroy() {
-    for (final subscription in _subscriptions) {
-      subscription.cancel();
-    }
+    _disposer.dispose();
   }
 
-  void _dismissOverlay() {
-    overlayArtwork = null;
-  }
-
-  void _showOverlay(Artwork artwork) {
-    overlayArtwork = artwork;
-  }
-
-  ShellComponent(this._controller);
-
-  List<StreamSubscription> _subscriptions;
-
-  final GalleryController _controller;
+  final _disposer = Disposer.oneShot();
+  final ChangeDetectorRef _changeDetector;
+  final OverlayModel _overlayModel;
 }

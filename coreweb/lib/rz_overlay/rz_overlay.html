@@ -1,32 +1,34 @@
-<!-- Background to catch clicks that should dismiss the overlay -->
-<div (click)="handleDismiss()"
-     style="position: fixed; width: 100%; height: 100%;"
-     tabindex="-1">
+<div *ngIf="hasArtwork">
+  <!-- Background to catch clicks that should dismiss the overlay -->
+  <div (click)="handleDismiss()"
+       style="position: fixed; width: 100%; height: 100%;"
+       tabindex="-1">
+  </div>
+  
+  <!-- Close button -->
+  <material-fab autoFocus
+                (trigger)="handleDismiss()"
+                class="close-button">
+    <material-icon icon="close"></material-icon>
+  </material-fab>
+  
+  <!-- Navigate left -->
+  <material-fab *ngIf="hasLeft"
+                raised
+                class="left navigate-button"
+                (trigger)="handleGoLeft()">
+    <material-icon icon="navigate_before"></material-icon>
+  </material-fab>
+  
+  <!-- The art -->
+  <slow-load-image [src]="artwork.fullUrl" [alt]="artwork.name">
+  </slow-load-image>
+  
+  <!-- Navigate right -->
+  <material-fab *ngIf="hasRight"
+                raised
+                class="right navigate-button"
+                (trigger)="handleGoRight()">
+    <material-icon icon="navigate_next"></material-icon>
+  </material-fab>
 </div>
-
-<!-- Close button -->
-<material-fab autoFocus
-              (trigger)="handleDismiss()"
-              class="close-button">
-  <material-icon icon="close"></material-icon>
-</material-fab>
-
-<!-- Navigate left -->
-<material-fab *ngIf="hasLeft"
-              raised
-              class="left navigate-button"
-              (trigger)="handleGoLeft()">
-  <material-icon icon="navigate_before"></material-icon>
-</material-fab>
-
-<!-- The art -->
-<slow-load-image [src]="artwork.fullUrl" [alt]="artwork.name">
-</slow-load-image>
-
-<!-- Navigate right -->
-<material-fab *ngIf="hasRight"
-              raised
-              class="right navigate-button"
-              (trigger)="handleGoRight()">
-  <material-icon icon="navigate_next"></material-icon>
-</material-fab>

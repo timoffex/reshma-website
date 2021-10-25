@@ -1,13 +1,14 @@
-import 'dart:async';
-
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
+import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/auto_dismiss/auto_dismiss.dart';
 import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/material_button/material_fab.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
+import 'package:angular_components/utils/disposer/disposer.dart';
 import 'package:rz.coreweb/artwork.dart';
 import 'package:rz.coreweb/slow_load_image/slow_load_image.dart';
+import 'package:rz.coreweb/overlay_model.dart';
 
 @Component(
   selector: 'rz-overlay',
@@ -23,29 +24,30 @@ import 'package:rz.coreweb/slow_load_image/slow_load_image.dart';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class RzOverlayComponent {
-  @Input()
-  Artwork artwork;
-
-  @Output()
-  Stream<void> get onDismiss => _onDismiss.stream;
-  final _onDismiss = StreamController<void>.broadcast();
+class RzOverlayComponent implements OnDestroy {
+  @visibleForTemplate
+  bool get hasArtwork => _model.overlayArtworks != null;
 
   @visibleForTemplate
-  bool get hasLeft => artwork.prev != null;
+  bool get hasLeft => hasArtwork && _model.overlayArtworks.hasPrev;
 
   @visibleForTemplate
-  bool get hasRight => artwork.next != null;
+  bool get hasRight => hasArtwork && _model.overlayArtworks.hasNext;
+
+  @visibleForTemplate
+  Artwork get artwork => _model.overlayArtworks.currentArtwork;
 
   @HostListener('keyup.escape')
   @visibleForTemplate
-  void handleDismiss() => _onDismiss.add(null);
+  void handleDismiss() {
+    _model.overlayShown = false;
+  }
 
   @HostListener('keyup.arrowLeft')
   @visibleForTemplate
   void handleGoLeft() {
     if (hasLeft) {
-      artwork.prev.focus();
+      _model.overlayArtworks.showPrev();
     }
   }
 
@@ -53,7 +55,22 @@ class RzOverlayComponent {
   @visibleForTemplate
   void handleGoRight() {
     if (hasRight) {
-      artwork.next.focus();
+      _model.overlayArtworks.showNext();
     }
   }
+
+  @override
+  void ngOnDestroy() {
+    _disposer.dispose();
+  }
+
+  RzOverlayComponent(this._changeDetector, this._model) {
+    _disposer.addStreamSubscription(_model.changes.listen((_) {
+      _changeDetector.markForCheck();
+    }));
+  }
+
+  final _disposer = Disposer.oneShot();
+  final ChangeDetectorRef _changeDetector;
+  final OverlayModel _model;
 }

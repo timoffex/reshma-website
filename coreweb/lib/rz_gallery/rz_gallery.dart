@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
+import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/focus/focus_item.dart';
 import 'package:angular_components/focus/focus_list.dart';
 import 'package:built_collection/built_collection.dart';
 
 import 'package:rz.coreweb/artwork.dart';
-import 'package:rz.coreweb/gallery_controller.dart';
+import 'package:rz.coreweb/overlay_model.dart';
 
 @Component(
     selector: 'rz-gallery',
@@ -15,42 +16,27 @@ import 'package:rz.coreweb/gallery_controller.dart';
     styleUrls: ['rz_gallery.css'],
     directives: [NgFor, FocusItemDirective, FocusListDirective],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class RzGalleryComponent implements OnInit, OnDestroy {
+class RzGalleryComponent {
   @Input()
   BuiltList<Artwork> artworks;
 
+  void focus(int index) {
+    container.focus(index);
+  }
+
   @visibleForTemplate
-  void handleClickArtwork(Artwork artwork) {
-    artwork.focus();
+  void handleClickArtwork(int index) {
+    final artworkList = _overlay.showArtworkList(artworks, index);
+
+    _overlayCloseSubscription?.cancel();
+    _overlayCloseSubscription = artworkList.onClose.listen(focus);
   }
 
   @ViewChild('container', read: FocusListDirective)
   FocusListDirective container;
 
-  @override
-  void ngOnInit() {
-    _subscriptions = [
-      _controller.galleryFocusChange.listen(_setFocus),
-    ];
-  }
+  RzGalleryComponent(this._overlay);
 
-  @override
-  void ngOnDestroy() {
-    for (final subscription in _subscriptions) {
-      subscription.cancel();
-    }
-  }
-
-  void _setFocus(Artwork artwork) {
-    final index = artworks.indexOf(artwork);
-
-    if (index >= 0) {
-      container.focus(index);
-    }
-  }
-
-  RzGalleryComponent(this._controller);
-
-  List<StreamSubscription> _subscriptions;
-  final GalleryController _controller;
+  StreamSubscription _overlayCloseSubscription;
+  final OverlayModel _overlay;
 }
