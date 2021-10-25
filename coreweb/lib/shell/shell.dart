@@ -2,7 +2,8 @@ import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart' hide overlayModule;
-import 'package:angular_components/utils/disposer/disposer.dart';
+import 'package:meta/meta.dart';
+import 'package:rz.coreweb/model_listener_mixin.dart';
 import 'package:rz.coreweb/overlay_model.dart';
 import 'package:rz.coreweb/rz_gallery/rz_gallery.dart';
 import 'package:rz.coreweb/rz_overlay/rz_overlay.dart';
@@ -29,21 +30,16 @@ import 'package:rz.coreweb/rz_video/rz_video.dart';
     ],
     providers: [overlayModule],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class ShellComponent implements OnDestroy {
+class ShellComponent with ModelListenerMixin {
   @visibleForTemplate
   bool get overlayVisible => _overlayModel.overlayShown;
 
-  ShellComponent(this._changeDetector, this._overlayModel) {
-    _disposer.addStreamSubscription(
-        _overlayModel.changes.listen((_) => _changeDetector.markForCheck()));
+  ShellComponent(this.changeDetector, this._overlayModel) {
+    observeModel(_overlayModel);
   }
 
   @override
-  void ngOnDestroy() {
-    _disposer.dispose();
-  }
-
-  final _disposer = Disposer.oneShot();
-  final ChangeDetectorRef _changeDetector;
+  @protected
+  final ChangeDetectorRef changeDetector;
   final OverlayModel _overlayModel;
 }
