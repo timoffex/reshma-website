@@ -1,3 +1,15 @@
+<div class="navbar">
+  <ng-container *ngIf="isSaving">
+    <material-spinner></material-spinner>
+    &nbsp;Saving!
+  </ng-container>
+  <ng-container *ngIf="!isSaving">
+    <material-button [disabled]="!needsSaving"
+                     (trigger)="saveModel()">
+      Save changes
+    </material-button>
+  </ng-container>
+</div>
 <rz-shell *ngIf="hasArtworks">
   <rz-gallery-editor artwork [(artworks)]="artworks"></rz-gallery-editor>
   <rz-gallery-editor merch [(artworks)]="merch"></rz-gallery-editor>

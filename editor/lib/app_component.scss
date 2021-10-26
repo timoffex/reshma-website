@@ -1,0 +1,12 @@
+@use 'package:angular_components/css/material/material' as material;
+@use 'package:rz.coreweb/css/common' as common;
+
+.navbar {
+  position: fixed;
+  top: 0;
+
+  height: 6 * material.$mat-grid;
+  width: 100%;
+
+  @include common.theme("background-color", common.$primary-color);
+}
