@@ -45,14 +45,14 @@ class OverlayArtworkList {
 
   void showNext() {
     if (hasNext) {
-      ++_index;
+      _index += 1;
       _model.notifyChange();
     }
   }
 
   void showPrev() {
     if (hasPrev) {
-      ++_index;
+      _index -= 1;
       _model.notifyChange();
     }
   }
