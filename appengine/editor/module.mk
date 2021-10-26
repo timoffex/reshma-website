@@ -18,6 +18,7 @@ $(subdir_out)/public: $(OUTPUT_DIR)/editor/build $(_OUT_FILES)
 	mkdir -p $@
 	cp -r $</assets/ $@/assets/
 	cp -r $</fonts/ $@/fonts/
+	cp -r $</packages/ $@/packages/
 	cp $</favicon.ico $@
 	cp $</index.html $@
 	cp $</main.dart.js $@

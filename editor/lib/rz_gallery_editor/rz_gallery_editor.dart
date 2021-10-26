@@ -36,12 +36,12 @@ class RzGalleryEditorComponent {
   void onDrop(int index, MouseEvent event) {
     event.preventDefault();
     final originalIndex =
-        int.parse(event.dataTransfer.getData('__artwork_index'));
+        int.tryParse(event.dataTransfer.getData('__artwork_index'));
+    if (originalIndex == null) return;
     print('Drop $originalIndex at $index');
-    artworks = artworks.rebuild((b) {
+    _artworksChange.add(artworks.rebuild((b) {
       b[originalIndex] = artworks[index];
       b[index] = artworks[originalIndex];
-    });
-    _artworksChange.add(artworks);
+    }));
   }
 }

@@ -6,8 +6,7 @@ import 'package:angular/meta.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:rz.coreweb/gallery_controller.dart';
-import 'package:rz.coreweb/gallery_model.dart';
+import 'package:rz.coreweb/artwork.dart';
 import 'package:rz.coreweb/shell/shell.dart';
 import 'package:rz.editor/rz_gallery_editor/rz_gallery_editor.dart';
 import 'package:rz.proto/rz_schema.pb.dart' as pb;
@@ -20,21 +19,17 @@ import 'package:rz.proto/rz_schema.pb.dart' as pb;
       RzGalleryEditorComponent,
       ShellComponent,
     ],
-    providers: [
-      materialProviders,
-      galleryModule,
-      galleryControllerModule,
-    ],
+    providers: [materialProviders],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent implements OnInit {
   @visibleForTemplate
-  GalleryModel galleryModel;
+  bool get hasArtworks => artworks != null && merch != null;
 
   @visibleForTemplate
-  BuiltList<GalleryArtwork> artworks;
+  BuiltList<Artwork> artworks;
 
   @visibleForTemplate
-  BuiltList<GalleryArtwork> merch;
+  BuiltList<Artwork> merch;
 
   @override
   void ngOnInit() {
@@ -46,25 +41,23 @@ class AppComponent implements OnInit {
         pb.RzWebsiteSchema.fromJson(await HttpRequest.getString('/schema'));
 
     artworks = schema.galleryArtworks
-        .map((artwork) => GalleryArtwork(
+        .map((artwork) => Artwork(
             name: artwork.name,
             thumbnailUrl: artwork.thumbnailUri,
             fullUrl: artwork.previewUri))
         .toBuiltList();
 
     merch = schema.merch
-        .map((artwork) => GalleryArtwork(
+        .map((artwork) => Artwork(
             name: artwork.name,
             thumbnailUrl: artwork.thumbnailUri,
             fullUrl: artwork.previewUri))
         .toBuiltList();
 
-    galleryModel = _galleryModelFactory.create(artworks, merch);
     _changeDetector.markForCheck();
   }
 
-  AppComponent(this._galleryModelFactory, this._changeDetector);
+  AppComponent(this._changeDetector);
 
-  final GalleryModelFactory _galleryModelFactory;
   final ChangeDetectorRef _changeDetector;
 }

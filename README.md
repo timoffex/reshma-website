@@ -102,3 +102,5 @@ decided to learn `make` and figure out how to use it like `bazel`.
 - `gmake appengine/default/runlocally` to start local server
 - `gmake out/appengine/default/public` to rebuild Dart part of the
   application
+- `gmake <dart app>/.makeactions/local_packages` to pull changes from
+  local dependencies
