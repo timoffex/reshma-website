@@ -2,3 +2,7 @@
   <rz-gallery artwork [artworks]="artworks"></rz-gallery>
   <rz-gallery merch [artworks]="merch"></rz-gallery>
 </rz-shell>
+
+<focus-trap *ngIf="overlayVisible">
+  <rz-overlay></rz-overlay>
+</focus-trap>

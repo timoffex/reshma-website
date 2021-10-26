@@ -3,25 +3,35 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular/meta.dart';
-import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/angular_components.dart' hide overlayModule;
 import 'package:built_collection/built_collection.dart';
+import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:rz.coreweb/artwork.dart';
+import 'package:rz.coreweb/model_listener_mixin.dart';
+import 'package:rz.coreweb/overlay_model.dart';
 import 'package:rz.coreweb/rz_gallery/rz_gallery.dart';
+import 'package:rz.coreweb/rz_overlay/rz_overlay.dart';
 import 'package:rz.coreweb/shell/shell.dart';
 import 'package:rz.proto/rz_schema.pb.dart' as pb;
 
 @Component(
     selector: 'my-app',
     templateUrl: 'app_component.html',
+    styleUrls: ['app_component.css'],
     directives: [
+      FocusTrapComponent,
       NgIf,
       RzGalleryComponent,
+      RzOverlayComponent,
       ShellComponent,
     ],
-    providers: [materialProviders],
+    providers: [materialProviders, overlayModule],
     changeDetection: ChangeDetectionStrategy.OnPush)
-class AppComponent implements OnInit {
+class AppComponent with ModelListenerMixin implements OnInit {
+  @visibleForTemplate
+  bool get overlayVisible => _overlay.overlayShown;
+
   @visibleForTemplate
   BuiltList<Artwork> artworks;
 
@@ -51,10 +61,16 @@ class AppComponent implements OnInit {
             fullUrl: artwork.previewUri))
         .toBuiltList();
 
-    _changeDetector.markForCheck();
+    changeDetector.markForCheck();
   }
 
-  AppComponent(this._changeDetector);
+  AppComponent(this._overlay, this.changeDetector) {
+    observeModel(_overlay);
+  }
 
-  final ChangeDetectorRef _changeDetector;
+  final OverlayModel _overlay;
+
+  @override
+  @protected
+  final ChangeDetectorRef changeDetector;
 }
