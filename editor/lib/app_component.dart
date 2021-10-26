@@ -91,7 +91,17 @@ class AppComponent implements OnInit {
     _changeDetector.markForCheck();
 
     try {
-      await Future.delayed(Duration(seconds: 3));
+      final data = pb.RzWebsiteSchema()
+        ..galleryArtworks.addAll(artworks.map((artwork) => pb.GalleryArtwork()
+          ..name = artwork.name
+          ..thumbnailUri = artwork.thumbnailUrl
+          ..previewUri = artwork.fullUrl))
+        ..merch.addAll(merch.map((merch) => pb.Merch()
+          ..name = merch.name
+          ..thumbnailUri = merch.thumbnailUrl
+          ..previewUri = merch.fullUrl));
+      await HttpRequest.request('/schema',
+          method: 'PUT', sendData: data.writeToJson());
       _needsSave = false;
     } finally {
       _isSaving = false;
