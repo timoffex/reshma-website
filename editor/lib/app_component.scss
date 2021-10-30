@@ -4,9 +4,27 @@
 .navbar {
   position: fixed;
   top: 0;
+  z-index: 1;
 
-  height: 6 * material.$mat-grid;
-  width: 100%;
+  &, .navbar-reserved-space {
+    height: 6 * material.$mat-grid;
+    width: 100%;
+  }
+
+  @include material.shadow-elevation($dp: 2);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
 
   @include common.theme("background-color", common.$primary-color);
+}
+
+.saving-text {
+  font-size: material.$mat-font-size-button;
+  font-weight: material.$mat-font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: normal;
 }

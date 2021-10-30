@@ -1,7 +1,7 @@
 <div class="navbar">
   <ng-container *ngIf="isSaving">
     <material-spinner></material-spinner>
-    &nbsp;Saving!
+    <span class="saving-text">&nbsp;Saving!</span>
   </ng-container>
   <ng-container *ngIf="!isSaving">
     <material-button [disabled]="!needsSaving"
@@ -10,6 +10,7 @@
     </material-button>
   </ng-container>
 </div>
+<div class="navbar-reserved-space"></div>
 <rz-shell *ngIf="hasArtworks">
   <rz-gallery-editor artwork [(artworks)]="artworks"></rz-gallery-editor>
   <rz-gallery-editor merch [(artworks)]="merch"></rz-gallery-editor>
