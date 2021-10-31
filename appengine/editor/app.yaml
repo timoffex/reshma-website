@@ -1,4 +1,4 @@
-service: editor
+service: default
 runtime: ruby26
 
 entrypoint: bundle exec ruby app.rb -p 8080

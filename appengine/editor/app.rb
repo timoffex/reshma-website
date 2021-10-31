@@ -5,7 +5,7 @@ require 'google/cloud/storage'
 class SchemaService
   def initialize
     storage = Google::Cloud::Storage.new
-    @dev_bucket = storage.bucket('reshma-website-dev')
+    @dev_bucket = storage.bucket('reshma-website-editor.appspot.com')
     @last_read_time = Time.now
     @last_schema = nil
   end

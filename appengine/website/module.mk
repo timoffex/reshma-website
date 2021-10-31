@@ -33,5 +33,5 @@ $(subdir_src)/runlocally: $(subdir_out)/public
 .PHONY: $(subdir_src)/deploy
 $(subdir_src)/deploy: $(subdir_out)/public
 	cd $(dir $<) && \
-	  gcloud app deploy --no-promote
+	  gcloud app deploy --no-promote --project "reshma-website"
 	@echo "New version is not yet receiving traffic. Go to https://console.cloud.google.com/appengine/versions. See help for 'gcloud app versions'"
