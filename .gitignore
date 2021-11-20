@@ -2,3 +2,6 @@
 *~
 public/
 out/
+
+# Bazel files
+bazel-*
