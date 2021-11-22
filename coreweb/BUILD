@@ -1,4 +1,4 @@
-load("//build_rules:dart_library.bzl", "dart_library")
+load("//build_rules:dart.bzl", "dart_library")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -20,4 +20,5 @@ dart_library(
         "build_web_compilers: ^2.11.0",
         "pedantic: ^1.9.0",
     ],
+    deps = ["//proto:rz_schema_dart_proto"],
 )

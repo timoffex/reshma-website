@@ -71,6 +71,10 @@ files.
 
 ---
 
+NOTE: The info below is outdated now. I figured out how to hack Bazel
+to do what I want, and I'm in the process of phasing out Make because
+the syntax became too ugly to use as the project grew.
+
 I use `make` for the build system. I don't use recursive `make`;
 instead I have a single top-level `Makefile` that includes modules
 from subdirectories, and I run all `make` commands from the project

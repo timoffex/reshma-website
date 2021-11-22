@@ -1,14 +1,10 @@
 load("//build_rules:dart.bzl", "dart_library")
 
 dart_library(
-    name = "website",
-    srcs = glob(["lib/**"]),
+    name = "editor",
     pub_deps = [
         "angular: ^6.0.1",
-        "angular_components: ^1.0.2",
         "bootstrap_sass: any",
-        "built_collection: any",
-        "stream_transform: ^1.2.0",
     ],
     pub_dev_deps = [
         "build_runner: ^1.10.0",
@@ -18,5 +14,6 @@ dart_library(
     ],
     deps = [
         "//coreweb",
+        "//proto:rz_schema_dart_proto",
     ],
 )
